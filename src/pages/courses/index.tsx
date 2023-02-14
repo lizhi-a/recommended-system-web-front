@@ -21,7 +21,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
     refetch();
   }
   return (
-    <div className='pt-6'>
+    <div className='mt-6'>
       <div className='w-full mx-auto sm:w-full md:w-2/3 lg:w-1/2 mb-16'>
         <Input.Search
           enterButton
