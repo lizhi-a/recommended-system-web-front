@@ -41,6 +41,12 @@ export const Layout: React.FC<LayoutProperties> = ({ children }) => {
 				layout='top'
         title="vdp"
 				fixSiderbar
+        contentStyle={{
+          minHeight: 'calc(100vh - 64px)',
+          margin: 0, // umi4的坑，生产环境会在这个元素上加 margin-block: 24px；margin-inline: 40px; 导致出现横向滚动条
+          paddingBlock: 0,
+          paddingInline: 8,
+        }}
 				location={{
 					pathname
 				}}
@@ -81,7 +87,7 @@ export const Layout: React.FC<LayoutProperties> = ({ children }) => {
 				)}
         route={{ routes }}
 			>
-        <div className='container mx-auto min-h-screen bg-white'>{children}</div>
+        <div className='container mx-auto min-h-screen'>{children}</div>
 			</ProLayout>
 		</div>
 	)
