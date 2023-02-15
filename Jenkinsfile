@@ -11,7 +11,7 @@ podTemplate(inheritFrom: "node-16") {
               env.APP_VERSION = "default"
             }
             env.DOCKER_HOST = "tcp://dm0.nroad.com.cn:2375"
-            env.REGISTRY = "harbor.nroad.com.cn/osp"
+            env.REGISTRY = "harbor.nroad.com.cn/horus"
             env.IMAGE = "xjtu-vdp-customer-web"
         }
 
