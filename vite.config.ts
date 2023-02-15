@@ -17,10 +17,10 @@ export default defineConfig({
   server: {
     port: 10001,
     proxy: {
-      // '/api': {
-			// 	target: 'http://192.168.15.105:10000',
-			// 	changeOrigin: true
-			// }
+      '/api': {
+				target: 'http://192.168.15.105:10000',
+				changeOrigin: true
+			}
     }
   },
 })
