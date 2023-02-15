@@ -5,6 +5,11 @@
 * {
   box-sizing: border-box;
 }
+
+body {
+  margin: 0;
+}
+
 .double-line-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
