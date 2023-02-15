@@ -20,7 +20,7 @@ podTemplate(inheritFrom: "node-16") {
                 sh "yarn install"
                 sh "yarn build"
                 sh "cp package.json ${env.WORKSPACE}/dist/"
-                sh "cp default.conf ${env.WORKSPACE}/dist/"
+                sh "cp nginx.conf ${env.WORKSPACE}/dist/"
                 sh "ls ${env.WORKSPACE}/dist"
             }
         }
