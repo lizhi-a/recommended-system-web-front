@@ -1,0 +1,22 @@
+
+#player {
+  width: 100%;
+  height: calc(100vw * 9 / 16);
+}
+@media (min-width: 640px) {
+  #player {
+    height: calc(100vw * 9 / 16);
+  }
+}
+
+@media (min-width: 768px) { 
+  #player {
+    height: calc(100vw * 9 / 16);
+  }
+}
+
+@media (min-width: 1024px) {
+  #player {
+    height: 100%;
+  }
+}

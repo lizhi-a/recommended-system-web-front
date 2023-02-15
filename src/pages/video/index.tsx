@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import './index.css'
 
 interface VideoPageProps {
 
@@ -49,12 +50,9 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
     addListeners();
   }, [])
   return (
-    <div>
-      <h3>ckplayer demo</h3>
+    <div className='w-full min-h-full'>
       <div
         id="player"
-        className='w-4/5 mx-auto'
-        style={{ height: 500 }}
       />
     </div>
   )
