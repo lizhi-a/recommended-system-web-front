@@ -1,4 +1,5 @@
-import callApi from '@/http/callApi'
+import callApi from '@/http/call-api'
+import axios from 'axios'
 import { Credentials, LoginDetails, UserInfo } from './types'
 
 export const login = (parameters: Credentials) =>

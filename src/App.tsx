@@ -8,6 +8,8 @@ import LoadingOrError from '@/components/LoadingOrError'
 import Layout from './layouts'
 import { getToken } from './http/token'
 
+const withoutCheckLoginPath = ['/login', '/cas'];
+
 function generateRouteConfig(menuRoutes: MenuRoute[]): RouteObject[] {
 	const result: RouteObject[] = []
 	for (const menuRouteItem of menuRoutes) {
@@ -38,7 +40,8 @@ export default function App(): ReactElement {
   const location = useLocation();
   useEffect(() => {
     const isLogin = !!getToken();
-    if (!isLogin && location.pathname !== '/login') {
+    console.log(isLogin);
+    if (!isLogin && !withoutCheckLoginPath.includes(location.pathname)) {
       navigate('/login');
     }
   }, [location.pathname])

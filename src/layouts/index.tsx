@@ -12,7 +12,7 @@ interface LayoutProperties {
 	children?: React.ReactNode
 }
 
-const blankPagePath = new Set(['/login'])
+const blankPagePath = new Set(['/login', '/cas'])
 
 export const Layout: React.FC<LayoutProperties> = ({ children }) => {
 	const [pathname, setPathname] = useState('/courses')

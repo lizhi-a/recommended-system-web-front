@@ -1,0 +1,12 @@
+.my-course-card {
+  position: relative;
+}
+
+.my-course-card__delete-btn {
+  transform: translate(100%, -100%);
+  transition: all .3s;
+}
+
+.my-course-card:hover .my-course-card__delete-btn {
+  transform: translate(50%, -50%);
+}

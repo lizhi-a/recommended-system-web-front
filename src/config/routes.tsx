@@ -41,5 +41,10 @@ export const routes: MenuRoute[] = [
     path: '/login',
     component: lazy(() => import('@/pages/login')),
     hideInMenu: true,
-  }
+  },
+  {
+    path: '/cas',
+    component: lazy(() => import('@/pages/cas')),
+    hideInMenu: true,
+  },
 ]
