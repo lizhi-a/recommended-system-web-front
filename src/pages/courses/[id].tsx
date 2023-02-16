@@ -1,7 +1,8 @@
-import DescriptionText, { DescriptionTextItem } from '@/components/DescriptionText';
-import { ClockCircleOutlined } from '@ant-design/icons';
+import { registerCourseForMe } from '@/api/courses';
+import { useMyCourses } from '@/hooks/queries';
 import { Breadcrumb, Button, Image } from 'antd';
 import React from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import ChapterCard from './components/ChapterCard';
 
 const Box: React.FC<{ children?: React.ReactNode; className?: string; }> = ({ children }) => (
@@ -11,33 +12,59 @@ const Box: React.FC<{ children?: React.ReactNode; className?: string; }> = ({ ch
 )
 
 const CourseDetail: React.FC = () => {
+  const { id: courseId } = useParams<{ id: string; }>();
+  const [myCourseDetail] = useMyCourses(courseId);
+  const navigate = useNavigate();
 
+  const handleRegisterCourse = async () => {
+    if (courseId) {
+      await registerCourseForMe({
+        id: courseId
+      })
+      const catelogId = myCourseDetail?.catalogs?.[0].id;
+      if (catelogId) {
+        navigate(`/video/${courseId}/${catelogId}`)
+      }
+    }
+  }
+
+  const handleContinueCourse = async () => {
+    console.log('继续学习');
+    const catelogId = myCourseDetail?.catalogs?.[0].id;
+    if (catelogId) {
+      navigate(`/video/${courseId}/${catelogId}`)
+    }
+  }
   return (
     <div>
       <div className='px-4 py-2 mt-6 bg-white'>
         <Breadcrumb>
           <Breadcrumb.Item href='/courses'>首页</Breadcrumb.Item>
-          <Breadcrumb.Item>课程名称</Breadcrumb.Item>
+          <Breadcrumb.Item>{myCourseDetail?.name}</Breadcrumb.Item>
         </Breadcrumb>
         <div className='flex flex-wrap lg:px-4 py-4'>
           <Box>
             <div className='w-full'>
-              <Image src="https://static.runoob.com/images/demo/demo2.jpg" preview={false} />
+              <Image width="100%" src={myCourseDetail?.coverUrl} preview={false} />
             </div>
           </Box>
           <Box className="md:">
             <div className='flex justify-between pt-6'>
-              <h1 className='text-base font-medium m-0 p-0 w-1/2 overflow-hidden text-ellipsis whitespace-nowrap'>课程名称</h1>
-              <div className='text-ant-text-secondary text-base'>开通组织：信息学院</div>
+              <h1 className='text-base font-medium m-0 p-0 w-1/2 overflow-hidden text-ellipsis whitespace-nowrap'>{myCourseDetail?.name}</h1>
+              <div className='text-ant-text-secondary text-base'>开通组织：{myCourseDetail?.orgName}</div>
             </div>
-            <div className='mt-8 mb-2 text-ant-text-secondary leading-7 text-base'>
+            <div className='mt-8 mb-2 text-ant-text-secondary leading-7 text-base' style={{ minHeight: 128 }}>
               课程介绍：
-              {
-                '使用 props 和 state，我们可以创建一个简易的 Todo 应用。在示例中，我们使用 state 来保存现有的待办事项列表及用户的输入。尽管事件处理器看似被内联地渲染，但它们其实只会被事件委托进行收集和调用。'
-              }
+              { myCourseDetail?.description }
             </div>
             <div className='md:absolute lg:absolute left-0 bottom-0'>
-              <Button size='large' type='primary' className='bg-green-500 hover:bg-green-400'>继续学习</Button>
+              {
+                myCourseDetail?.createAt ? (
+                  <Button size='large' type='primary' onClick={handleContinueCourse}>继续学习</Button>
+                ) : (
+                  <Button size='large' type='primary' onClick={handleRegisterCourse}>开始学习</Button>
+                )
+              }
             </div>
           </Box>
         </div>
@@ -47,13 +74,10 @@ const CourseDetail: React.FC = () => {
         <h2 className='ml-4 my-0 font-medium text-base'>课程章节</h2>
         <ul className='list-none my-0 p-0 mx-auto w-full sm:w-full md:w-2/3'>
           {
-            [1, 2, 3, 4, 5, 6].map((v) => (
+            myCourseDetail?.catalogs?.map((item, index) => (
               <ChapterCard
-                chapter={{
-                  sort: v,
-                  name: `C语言入门第${v}课`,
-                  description: '',
-                }}
+                chapter={item}
+                index={index}
               />
             ))
           }

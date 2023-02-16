@@ -1,8 +1,10 @@
+import { useMe } from '@/hooks/queries';
 import { removeToken } from '@/http/token';
 import { PoweroffOutlined } from '@ant-design/icons';
 import { ProLayoutProps } from '@ant-design/pro-components';
 import { Dropdown, Space } from 'antd';
 export const actions: ProLayoutProps['actionsRender'] = properties => {
+  const [myInfo] = useMe()
   return [
     <Dropdown
       key='avatar'
@@ -21,7 +23,7 @@ export const actions: ProLayoutProps['actionsRender'] = properties => {
       }}
     >
       <Space>
-        <span>用户名</span>
+        <span>{myInfo?.username}</span>
       </Space>
     </Dropdown>
   ]

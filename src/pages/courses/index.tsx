@@ -1,7 +1,5 @@
-import { getCourses } from '@/api/courses';
 import { useCourses } from '@/hooks/queries';
-import { useQuery } from '@tanstack/react-query';
-import { Input } from 'antd';
+import { Input, Pagination } from 'antd';
 import { SearchProps } from 'antd/es/input';
 import React, { useState } from 'react';
 import LoadingOrError from '@/components/LoadingOrError';
@@ -12,7 +10,10 @@ interface DashboardProps {
 }
 const Dashboard: React.FC<DashboardProps> = (props) => {
   const [searchText, setSearchText] = useState<string>();
-  const [courses, { refetch, isLoading }] = useCourses(searchText);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [data, { refetch, isLoading }] = useCourses(searchText, currentPage);
+  const totalElements = data?.totalElements || 100;
+
   const handleSearchChange: SearchProps['onChange'] = (e) => {
     setSearchText(e.target.value)
   }
@@ -35,25 +36,26 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         isLoading ? <LoadingOrError /> : (
           <section className='flex justify-start flex-wrap'>
             {
-              [1, 2, 3, 4, 5, 6, 7, 8].map((v) => (
+              data?.content?.map((course) => (
                 <CourseCard
-                  key={v}
-                  course={{
-                    chapters: [],
-                    cover: 'https://static.runoob.com/images/demo/demo2.jpg',
-                    createAt: '',
-                    description: '',
-                    id: '1',
-                    name: 'C语言',
-                    orgName: '计算机学院',
-                    updateAt: '',
-                  }}
+                  key={course.id}
+                  course={course}
                 />
               ))
             }
           </section>
         )
       }
+      <div className='w-full flex justify-end'>
+        <Pagination
+          showSizeChanger={false}
+          pageSize={20}
+          current={currentPage}
+          total={totalElements}
+          onChange={(page) => {() => setCurrentPage(page) }}
+          size="small"
+        />
+      </div>
     </div>
   )
 }

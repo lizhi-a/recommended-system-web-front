@@ -32,7 +32,7 @@ export const routes: MenuRoute[] = [
     component: lazy(() => import('@/pages/my-courses')),
   },
   {
-    path: '/video/:vid',
+    path: '/video/:courseId/:catalogId',
     name: '视频demo',
     component: lazy(() => import('@/pages/video')),
     hideInMenu: true,

@@ -40,7 +40,6 @@ export default function App(): ReactElement {
   const location = useLocation();
   useEffect(() => {
     const isLogin = !!getToken();
-    console.log(isLogin);
     if (!isLogin && !withoutCheckLoginPath.includes(location.pathname)) {
       navigate('/login');
     }

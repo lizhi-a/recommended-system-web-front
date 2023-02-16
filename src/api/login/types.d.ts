@@ -1,14 +1,16 @@
-export interface Credentials {
-	username: string
-	password: string
+interface UserInfo {
+  uid: string;
+  username: string;
+  status: string;
+  orgName: string;
+  accountCourses: AccountCourse[];
+  expireAt: string;
 }
 
-export interface UserInfo {
-	id: number
-	username: string
-}
-
-export interface LoginDetails {
-	info: UserInfo
-	token: string
+interface AccountCourse {
+  courseId: string;
+  courseName: string;
+  type: string;
+  courseProgress: number;
+  createAt: string;
 }
