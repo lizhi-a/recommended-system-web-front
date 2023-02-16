@@ -12,7 +12,6 @@ const MyCourses: React.FC = () => {
             <MyCourseCard
               key={v}
               course={{
-                chapters: [],
                 cover: 'https://static.runoob.com/images/demo/demo2.jpg',
                 createAt: '',
                 description: '',
