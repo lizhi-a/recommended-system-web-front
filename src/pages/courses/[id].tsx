@@ -1,7 +1,7 @@
 import { registerCourseForMe } from '@/api/courses';
 import { useMyCourseDetail } from '@/hooks/queries';
 import { Breadcrumb, Button, Image } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ChapterCard from './components/ChapterCard';
 
@@ -38,6 +38,27 @@ const CourseDetail: React.FC = () => {
       refetchMyCourseDetail();
     }
   }
+
+  const handleClickChapter = async (chapter?: Catlog) => {
+    if (courseId) {
+      // 用户没有注册该课程，需要注册
+      if (!myCourseDetail?.createAt) {
+        await registerCourseForMe({
+          id: courseId
+        })
+      }
+      const catelogId = chapter?.id;
+      if (catelogId) {
+        navigate(`/video/${courseId}/${catelogId}`)
+      } else {
+        refetchMyCourseDetail();
+      }
+    }
+  }
+
+  useEffect(() => {
+    refetchMyCourseDetail();
+  }, [])
   return (
     <div>
       <div className='px-4 py-2 mt-6 bg-white'>
@@ -84,6 +105,7 @@ const CourseDetail: React.FC = () => {
                   index={index}
                   key={item.id}
                   courseId={courseId}
+                  onClick={handleClickChapter}
                 />
               )) 
             )

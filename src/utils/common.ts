@@ -125,6 +125,5 @@ export function getProgress(value: number, total: number) {
   if (!total) {
     return 0;
   }
-  console.log(value, total);
   return Math.round(Number((value/ total).toFixed(2)) * 100)
 }

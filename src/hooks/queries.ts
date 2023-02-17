@@ -28,8 +28,9 @@ export function useMe() {
 
 // 获取我已经注册的课程的详情
 export function useMyCourseDetail(id?: string, options?: CommonOption<CourseDetail>) {
-  const { data, ...rest} = useQuery(['getMyCourseDetail', id], () => getMyCourseDetail({ id } as { id: string}), {
+  const { data, ...rest} = useQuery(['getMyCourseDetail', id, location.pathname], () => getMyCourseDetail({ id } as { id: string}), {
     refetchOnWindowFocus: false,
+    refetchOnMount: true,
     onSuccess(data) {
       options?.onSuccess?.(data?.data)
     },

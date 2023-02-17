@@ -82,7 +82,10 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
     }
     setTimeout(() => {
     const ckPlayerRecords = player.cookie() as any[];
-      const seekTime = findItemFormList(ckPlayerRecords, 'name', targetCatlog?.id)?.time;
+      maxProgressRef.current = targetCatlog?.progress || 0;
+      const seekTimeInCookie = findItemFormList(ckPlayerRecords, 'name', targetCatlog?.id)?.time;
+      const seekTimeInServer = (maxProgressRef.current / 100) * player.duration();
+      let seekTime = seekTimeInCookie || seekTimeInServer || 0;
       // 上次播放时间存在 并且比（视频总时长 - 1秒）小，则跳转过去
       if (seekTime && seekTime < player.duration() - 1) {
         player.seek(seekTime)

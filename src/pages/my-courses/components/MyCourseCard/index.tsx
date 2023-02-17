@@ -44,11 +44,11 @@ const MyCourseCard: React.FC<MyCourseCardProps> = (props) => {
           </div>
 
           {/* 删除按钮 begin */}
-          <div className='my-course-card__delete-btn absolute top-0 right-0 rounded-full w-32 h-32 bg-black opacity-50'>
+          {/* <div className='my-course-card__delete-btn absolute top-0 right-0 rounded-full w-32 h-32 bg-black opacity-50'>
             <span className='absolute bottom-6 left-8 text-lg text-ant-error-color' onClick={handleDelete}>
               <DeleteOutlined />
             </span>
-          </div>
+          </div> */}
           {/* 删除按钮 end */}
         </div>
       </Link>
