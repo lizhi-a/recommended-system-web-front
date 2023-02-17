@@ -45,3 +45,15 @@ interface MyCourses {
   courseProgress?: number;
   createAt: string;
 }
+
+interface VideoRepoter {
+  courseId: string;
+  catalogId: string;
+  progress: number;
+  reportTime: string;
+}
+
+interface VideoRepoterWhenPlay {
+  getcourseId: string;
+  catalogId: string;
+}

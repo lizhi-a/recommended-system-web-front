@@ -1,4 +1,7 @@
-
+.player-container {
+  min-height: 400px;
+  height: 100%;
+}
 #player {
   width: 100%;
   height: calc(100vw * 9 / 16);

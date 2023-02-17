@@ -31,3 +31,18 @@ export const registerCourseForMe = (params: Pick<Course, 'id'>) => callApi.crypt
   },
   method: 'post',
 })
+
+
+// 当前播放的视频进度为0时，通知后端
+export const reportFirstPlay = (params: Pick<VideoRepoter, 'catalogId' | 'courseId'>) => callApi.crypted({
+  url: '/api/v1/self/account/course/playVideo',
+  data: params,
+  method: 'post',
+})
+
+// 上报视频播放
+export const reportVideoPlay = (params: VideoRepoter) => callApi.crypted({
+  url: '/api/v1/self/account/course/report',
+  data: params,
+  method: 'post',
+})
