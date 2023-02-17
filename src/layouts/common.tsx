@@ -1,11 +1,12 @@
 import { removeToken } from '@/http/token';
 import { PoweroffOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
+import { Avatar, Dropdown, Space } from 'antd';
 
 interface ProfileDropDownProps {
-  username?: string;
+  userInfo?: UserInfo;
 } 
-export const ProfileDropDown: React.FC<ProfileDropDownProps> = ({ username }) => {
+export const ProfileDropDown: React.FC<ProfileDropDownProps> = (props) => {
+  const { userInfo } = props;
   return (
     <Dropdown
       key='avatar'
@@ -24,7 +25,8 @@ export const ProfileDropDown: React.FC<ProfileDropDownProps> = ({ username }) =>
       }}
     >
       <Space>
-        <span>{username}</span>
+        <Avatar src={userInfo?.photo} />
+        <span>{userInfo?.realName}</span>
       </Space>
     </Dropdown>
   )

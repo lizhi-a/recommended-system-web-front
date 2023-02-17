@@ -31,8 +31,8 @@ axios.interceptors.response.use(
   (err) => {
     if (err.response?.status === 401 && window.location.pathname !== '/login') {
       sessionStorage.setItem('previous_url', window.location.pathname);
-      // removeToken();
-      // window.location.replace('/login');
+      removeToken();
+      window.location.replace('/login');
       message.error('请重新登录');
       return new Promise(() => { });
     }
@@ -168,8 +168,8 @@ const crypted = async <Res>(url: string, data: object | string, config?: AxiosRe
   } catch (error: any) {
     if (error.response?.status === 401 && window.location.pathname !== '/login') {
       sessionStorage.setItem('previous_url', window.location.pathname);
-      // removeToken();
-      // window.location.replace('/login');
+      removeToken();
+      window.location.replace('/login');
     }
     const decrypedErrorJson = decrypt(error.response?.data);
     if (decrypedErrorJson) {

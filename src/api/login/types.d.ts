@@ -5,6 +5,8 @@ interface UserInfo {
   orgName: string;
   accountCourses: AccountCourse[];
   expireAt: string;
+  realName: string;
+  photo: string;
 }
 
 interface AccountCourse {

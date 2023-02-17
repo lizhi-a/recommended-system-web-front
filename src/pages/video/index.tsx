@@ -19,7 +19,7 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
   const [continuousReporting, setContinuousReporting] = useState(false); // 是否持续上报
   const maxProgressRef = useRef(0); // 播放过的最大进度，用途：用户将视频往左拖后，播放未达到这个进度就不进行上报
   const { catalogId, courseId } = useParams<{courseId: string; catalogId: string;}>()
-  const [courseDetail] = useMyCourseDetail(courseId);
+  const [courseDetail, { refetch: refetchCourseDetail}] = useMyCourseDetail(courseId);
 
   // 查找播放的章节
   const targetCatlog = useMemo(() => {
@@ -68,6 +68,7 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
         video: targetCatlog?.resourceUrl,//视频地址
         cookie: catalogId,//cookie名称，在同一域中请保持唯一
         timeScheduleAdjust: 1, // timeScheduleAdjust: 5开启，会导致seek: cookie失效
+        playbackrateOpen: false
       };
       playerRef.current = new window.ckplayer(videoObject);
     }
@@ -80,11 +81,17 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
       return
     }
     setTimeout(() => {
-      player.seek(getVideoPlayTimeFromCookie(targetCatlog?.id))
+    const ckPlayerRecords = player.cookie() as any[];
+      const seekTime = findItemFormList(ckPlayerRecords, 'name', targetCatlog?.id)?.time;
+      // 上次播放时间存在 并且比（视频总时长 - 1秒）小，则跳转过去
+      if (seekTime && seekTime < player.duration() - 1) {
+        player.seek(seekTime)
+      }
       setTimeout(() => {
         // 如果用户已经学习过了，可以随意拖动进度条
         const timeScheduleAdjust = isStudyComplete ? 1 : 5;
         player.vars('timeScheduleAdjust', timeScheduleAdjust);
+        player.vars('playbackrateOpen', isStudyComplete);
         player.removeListener('play', handleFirstPlay)
       }, 100)
     }, 100)
@@ -122,7 +129,9 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
     // 暂停上报
     setContinuousReporting(false);
     maxProgressRef.current = 0;
-    reportMutation.mutate(100)
+    reportMutation.mutateAsync(100).then(() => {
+      refetchCourseDetail();
+    })
   }
 
 

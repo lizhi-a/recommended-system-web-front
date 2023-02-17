@@ -28,7 +28,7 @@ const NormalLayout: React.FC<NormalLayoutProps> = ({ children, userInfo }) => {
           paddingBlock: 0,
           paddingInline: 8,
         }}
-				actionsRender={() =>[ <ProfileDropDown username={userInfo?.username} />]}
+				actionsRender={() =>[ <ProfileDropDown userInfo={userInfo} />]}
 				menuItemRender={(item, dom) => (
 					<Link
 						to={item.path ?? '/'}

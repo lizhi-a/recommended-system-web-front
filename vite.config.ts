@@ -21,7 +21,11 @@ export default defineConfig({
 				target: 'http://192.168.15.105:10000',
 				// target: 'http://192.168.48.87:10000',
 				changeOrigin: true
-			}
+			},
+      '/minio': {
+        target: 'http://192.168.15.105:9000',
+        changeOrigin: true,
+      }
 		}
 	},
 })

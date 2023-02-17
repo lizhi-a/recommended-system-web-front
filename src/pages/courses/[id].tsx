@@ -13,7 +13,7 @@ const Box: React.FC<{ children?: React.ReactNode; className?: string; }> = ({ ch
 
 const CourseDetail: React.FC = () => {
   const { id: courseId } = useParams<{ id: string; }>();
-  const [myCourseDetail] = useMyCourseDetail(courseId);
+  const [myCourseDetail, { refetch: refetchMyCourseDetail}] = useMyCourseDetail(courseId);
   const navigate = useNavigate();
 
   const handleRegisterCourse = async () => {
@@ -21,17 +21,21 @@ const CourseDetail: React.FC = () => {
       await registerCourseForMe({
         id: courseId
       })
-      const catelogId = myCourseDetail?.catalogs?.[0].id;
+      const catelogId = myCourseDetail?.catalogs?.[0]?.id;
       if (catelogId) {
         navigate(`/video/${courseId}/${catelogId}`)
+      } else {
+        refetchMyCourseDetail();
       }
     }
   }
 
   const handleContinueCourse = async () => {
-    const catelogId = myCourseDetail?.catalogs?.[0].id;
+    const catelogId = myCourseDetail?.catalogs?.[0]?.id;
     if (catelogId) {
       navigate(`/video/${courseId}/${catelogId}`)
+    } else {
+      refetchMyCourseDetail();
     }
   }
   return (
@@ -73,13 +77,16 @@ const CourseDetail: React.FC = () => {
         <h2 className='ml-4 my-0 font-medium text-base'>课程章节</h2>
         <ul className='list-none my-0 p-0 mx-auto w-full sm:w-full md:w-2/3'>
           {
-            myCourseDetail?.catalogs?.map((item, index) => (
-              <ChapterCard
-                chapter={item}
-                index={index}
-                key={item.id}
-              />
-            ))
+            courseId && (
+              myCourseDetail?.catalogs?.map((item, index) => (
+                <ChapterCard
+                  chapter={item}
+                  index={index}
+                  key={item.id}
+                  courseId={courseId}
+                />
+              )) 
+            )
           }
         </ul>
       </div>
