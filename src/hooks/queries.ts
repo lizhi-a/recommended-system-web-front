@@ -1,4 +1,4 @@
-import { getCourses, getMyCourses } from "@/api/courses";
+import { getCourses, getMyCourseDetail, getMyCourses } from "@/api/courses";
 import { me } from "@/api/login";
 import { useQuery } from "@tanstack/react-query";
 
@@ -20,9 +20,17 @@ export function useMe() {
   return [res, rest] as [typeof res, typeof rest];
 }
 
-// 获取我已经注册的课程
-export function useMyCourses(id?: string) {
-  const { data, ...rest} = useQuery(['getMyCourseDetail', id], () => getMyCourses({ id } as { id: string}), {
+// 获取我已经注册的课程的详情
+export function useMyCourseDetail(id?: string) {
+  const { data, ...rest} = useQuery(['getMyCourseDetail', id], () => getMyCourseDetail({ id } as { id: string}), {
+    refetchOnWindowFocus: false
+  })
+  const res = data?.data;
+  return [res, rest] as [typeof res, typeof rest];
+}
+
+export function useMyCourses(searchText?: string, page: number = 1) {
+  const { data, ...rest} = useQuery(['getMyCourses', page], () => getMyCourses({ name: searchText, page: page - 1, size: 20 }), {
     refetchOnWindowFocus: false
   })
   const res = data?.data;

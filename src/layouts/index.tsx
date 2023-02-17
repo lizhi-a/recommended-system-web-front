@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import BlankLayout from './BlankLayout'
 import VideoLayout from './VideoLayout'
 import NormalLayout from './NormalLayout'
+import { useMe } from '@/hooks/queries'
 
 
 interface LayoutProperties {
@@ -12,7 +13,8 @@ interface LayoutProperties {
 const blankPagePath = new Set(['/login', '/cas'])
 
 export const Layout: React.FC<LayoutProperties> = ({ children }) => {
-	const location = useLocation()
+	const location = useLocation();
+  const [me] = useMe();
 	if (blankPagePath.has(location.pathname)) {
 		return (
 			<BlankLayout>{children}</BlankLayout>
@@ -20,11 +22,11 @@ export const Layout: React.FC<LayoutProperties> = ({ children }) => {
 	}
   if (location.pathname.startsWith('/video')) {
     return (
-      <VideoLayout>{children}</VideoLayout>
+      <VideoLayout userInfo={me}>{children}</VideoLayout>
     )
   }
 	return (
-    <NormalLayout>{children}</NormalLayout>
+    <NormalLayout userInfo={me}>{children}</NormalLayout>
 	)
 }
 

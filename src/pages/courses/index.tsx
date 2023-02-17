@@ -4,6 +4,7 @@ import { SearchProps } from 'antd/es/input';
 import React, { useState } from 'react';
 import LoadingOrError from '@/components/LoadingOrError';
 import CourseCard from './components/CourseCard';
+import SkeletonCard from '@/components/SkeletonCard';
 
 interface DashboardProps {
 
@@ -11,8 +12,8 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = (props) => {
   const [searchText, setSearchText] = useState<string>();
   const [currentPage, setCurrentPage] = useState(1);
-  const [data, { refetch, isLoading }] = useCourses(searchText, currentPage);
-  const totalElements = data?.totalElements || 100;
+  const [data, { refetch, isLoading, isError }] = useCourses(searchText, currentPage);
+  const totalElements = data?.totalElements || 0;
 
   const handleSearchChange: SearchProps['onChange'] = (e) => {
     setSearchText(e.target.value)
@@ -33,18 +34,20 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
         />
       </div>
       {
-        isLoading ? <LoadingOrError /> : (
           <section className='flex justify-start flex-wrap'>
             {
-              data?.content?.map((course) => (
-                <CourseCard
-                  key={course.id}
-                  course={course}
-                />
-              ))
+              (isLoading || isError) ? (
+                [1, 2, 3, 4].map((v) => <SkeletonCard key={v} />)
+              ) : (
+                data?.content?.map((course) => (
+                  <CourseCard
+                    key={course.id}
+                    course={course}
+                  />
+                ))
+              )
             }
           </section>
-        )
       }
       <div className='w-full flex justify-end'>
         <Pagination

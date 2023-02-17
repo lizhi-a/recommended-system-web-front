@@ -1,11 +1,12 @@
-import { useMe } from '@/hooks/queries';
 import { removeToken } from '@/http/token';
 import { PoweroffOutlined } from '@ant-design/icons';
-import { ProLayoutProps } from '@ant-design/pro-components';
 import { Dropdown, Space } from 'antd';
-export const actions: ProLayoutProps['actionsRender'] = properties => {
-  const [myInfo] = useMe()
-  return [
+
+interface ProfileDropDownProps {
+  username?: string;
+} 
+export const ProfileDropDown: React.FC<ProfileDropDownProps> = ({ username }) => {
+  return (
     <Dropdown
       key='avatar'
       menu={{
@@ -23,8 +24,10 @@ export const actions: ProLayoutProps['actionsRender'] = properties => {
       }}
     >
       <Space>
-        <span>{myInfo?.username}</span>
+        <span>{username}</span>
       </Space>
     </Dropdown>
-  ]
+  )
 }
+
+export default {};

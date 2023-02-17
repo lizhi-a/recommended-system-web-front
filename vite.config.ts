@@ -18,8 +18,8 @@ export default defineConfig({
 		port: 10001,
 		proxy: {
 			'/api': {
-				// target: 'http://192.168.15.105:10000',
-				target: 'http://192.168.48.87:10000',
+				target: 'http://192.168.15.105:10000',
+				// target: 'http://192.168.48.87:10000',
 				changeOrigin: true
 			}
 		}

@@ -1,5 +1,5 @@
 import { registerCourseForMe } from '@/api/courses';
-import { useMyCourses } from '@/hooks/queries';
+import { useMyCourseDetail } from '@/hooks/queries';
 import { Breadcrumb, Button, Image } from 'antd';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -13,7 +13,7 @@ const Box: React.FC<{ children?: React.ReactNode; className?: string; }> = ({ ch
 
 const CourseDetail: React.FC = () => {
   const { id: courseId } = useParams<{ id: string; }>();
-  const [myCourseDetail] = useMyCourses(courseId);
+  const [myCourseDetail] = useMyCourseDetail(courseId);
   const navigate = useNavigate();
 
   const handleRegisterCourse = async () => {
@@ -29,7 +29,6 @@ const CourseDetail: React.FC = () => {
   }
 
   const handleContinueCourse = async () => {
-    console.log('继续学习');
     const catelogId = myCourseDetail?.catalogs?.[0].id;
     if (catelogId) {
       navigate(`/video/${courseId}/${catelogId}`)
@@ -45,7 +44,7 @@ const CourseDetail: React.FC = () => {
         <div className='flex flex-wrap lg:px-4 py-4'>
           <Box>
             <div className='w-full'>
-              <Image width="100%" src={myCourseDetail?.coverUrl} preview={false} />
+              <Image width="100%" height={320} className="object-cover object-center" src={myCourseDetail?.coverUrl} preview={false} />
             </div>
           </Box>
           <Box className="md:">
@@ -78,6 +77,7 @@ const CourseDetail: React.FC = () => {
               <ChapterCard
                 chapter={item}
                 index={index}
+                key={item.id}
               />
             ))
           }

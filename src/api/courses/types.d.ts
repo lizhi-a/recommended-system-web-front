@@ -37,3 +37,11 @@ interface Catlog {
   createAt?: string;
   updateAt?: string;
 }
+
+interface MyCourses {
+  courseId: string;
+  courseName: string;
+  type: string;
+  courseProgress?: number;
+  createAt: string;
+}

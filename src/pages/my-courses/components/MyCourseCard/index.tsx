@@ -1,13 +1,13 @@
 import { DeleteOutlined } from '@ant-design/icons';
-import { Progress, Typography } from 'antd';
+import { Image, Progress, Typography } from 'antd';
 import dayjs from 'dayjs';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './index.css'
 
 interface MyCourseCardProps {
-  course?: Course;
-  onDelete?: (course: Course) => void;
+  course?: CourseDetail;
+  onDelete?: (course: CourseDetail) => void;
 }
 const MyCourseCard: React.FC<MyCourseCardProps> = (props) => {
   const { course, onDelete } = props;
@@ -22,10 +22,10 @@ const MyCourseCard: React.FC<MyCourseCardProps> = (props) => {
   }
   return (
     <div className='w-full sm:w-full  md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 py-3 flex' style={{ minHeight: 200 }}>
-      <Link to={`/courses/detail/${course.id}`}>
+      <Link to={`/courses/detail/${course.id}`} className="block w-full">
         <div className='flex-auto bg-white shadow-md transform transition hover:shadow-xl cursor-pointer rounded-lg overflow-hidden my-course-card'>
           <div className='w-full h-40'>
-            <img className='w-full h-full object-cover object-center' src={course.cover} />
+            <Image className="object-cover object-center" width="100%" height={160} preview={false} src={course.coverUrl} />
           </div>
           <div className='p-4'>
             <Typography.Text className='double-line-ellipsis mb-1 m-0 font-medium te'>{course.name}</Typography.Text>
@@ -33,12 +33,12 @@ const MyCourseCard: React.FC<MyCourseCardProps> = (props) => {
               <span className='mr-1'>
                 开始时间
               </span>
-              {dayjs().format('YYYY-MM-DD HH:mm')}
+              {dayjs(course?.createAt).format('YYYY-MM-DD HH:mm')}
             </div>
             <div className='flex'>
               <Typography.Text type='secondary' className='mr-1'>进度</Typography.Text>
               <div className='flex-1'>
-                <Progress percent={20} />
+                <Progress percent={course?.courseProgress || 0} />
               </div>
             </div>
           </div>

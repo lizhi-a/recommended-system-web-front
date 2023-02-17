@@ -15,7 +15,7 @@ const CourseCard: React.FC<CourseCardProps> = (props) => {
       <Link to={`/courses/detail/${course.id}`} className="block w-full">
         <div className='flex-auto bg-white shadow-md transform transition hover:shadow-xl cursor-pointer rounded-lg overflow-hidden'>
           <div className='w-full h-40'>
-            <Image width="100%" height={160} preview={false} src={course.cover} />
+            <Image className="object-cover object-center" width="100%" height={160} preview={false} src={course.cover} />
           </div>
           <div className='p-4'>
             <Typography.Text className='double-line-ellipsis pb-2 m-0 font-medium te'>{course.name}</Typography.Text>

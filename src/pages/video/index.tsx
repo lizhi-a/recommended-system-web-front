@@ -1,9 +1,10 @@
-import { useMyCourses } from '@/hooks/queries';
+import { useMyCourseDetail } from '@/hooks/queries';
 import { findItemFormList } from '@/utils/common';
 import React, { useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import './index.css'
+import getVideoPlayTimeFromCookie from '@/utils/get-video-play-time-from-cookie';
 
 interface VideoPageProps {
 
@@ -11,7 +12,7 @@ interface VideoPageProps {
 const VideoPage: React.FC<VideoPageProps> = (props) => {
   const playerRef = useRef<any>();
   const { catalogId, courseId } = useParams<{courseId: string; catalogId: string;}>()
-  const [courseDetail] = useMyCourses(courseId);
+  const [courseDetail] = useMyCourseDetail(courseId);
   const targetCatlog = findItemFormList(courseDetail?.catalogs || [], 'id', catalogId);
 
   const initPlayer = () => {
@@ -34,18 +35,7 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
       return
     }
     setTimeout(() => {
-      const ckid = targetCatlog?.id;
-      if (ckid) {
-        const lastPlayTimeCookie = jsCookie.get('ckplayer-player-cookie')
-        const historyVideos = lastPlayTimeCookie?.split(',');
-        if (historyVideos) {
-          const currentHistoryVideo = historyVideos.find((item) => {
-            return item.split(';')?.[0] === catalogId
-          })
-          const historySecond = currentHistoryVideo?.split(';')[1]
-          player.seek(Number(historySecond) / 100);
-        }
-      }
+      player.seek(getVideoPlayTimeFromCookie(targetCatlog?.id))
       setTimeout(() => {
         player.vars('timeScheduleAdjust',5);
         player.removeListener('play', handleFirstPlay)

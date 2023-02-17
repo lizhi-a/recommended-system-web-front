@@ -1,15 +1,16 @@
 import { ProLayout } from '@ant-design/pro-components';
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { actions } from './common';
+import { ProfileDropDown } from './common';
 import { routes } from '@/config/routes'
 
 
 interface NormalLayoutProps {
   children?: React.ReactNode;
+  userInfo?: UserInfo;
 }
-const NormalLayout: React.FC<NormalLayoutProps> = ({ children }) => {
-  const [pathname, setPathname] = useState('/courses')
+const NormalLayout: React.FC<NormalLayoutProps> = ({ children, userInfo }) => {
+
   return (
     <div
 			id='pro-layout'
@@ -27,16 +28,10 @@ const NormalLayout: React.FC<NormalLayoutProps> = ({ children }) => {
           paddingBlock: 0,
           paddingInline: 8,
         }}
-				location={{
-					pathname
-				}}
-				actionsRender={actions}
+				actionsRender={() =>[ <ProfileDropDown username={userInfo?.username} />]}
 				menuItemRender={(item, dom) => (
 					<Link
 						to={item.path ?? '/'}
-						onClick={() => {
-							setPathname(item.path ?? '/courses')
-						}}
 					>
 						{dom}
 					</Link>
