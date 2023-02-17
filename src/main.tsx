@@ -15,6 +15,7 @@ const queryClient = new QueryClient({
 	}
 })
 
+
 const container = document.querySelector('#root')
 if (container) {
 	const root = createRoot(container)
@@ -22,7 +23,7 @@ if (container) {
 		<StrictMode>
 			<QueryClientProvider client={queryClient}>
 				<BrowserRouter>
-					<App />
+          <App />
 				</BrowserRouter>
 			</QueryClientProvider>
 		</StrictMode>

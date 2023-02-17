@@ -1,5 +1,6 @@
+import { globalContext, useGlobal } from '@/contexts/global';
 import { ProLayout } from '@ant-design/pro-components';
-import React from 'react';
+import React, { useContext } from 'react';
 import { ProfileDropDown } from './common';
 
 interface VideoLayoutProps {
@@ -7,12 +8,12 @@ interface VideoLayoutProps {
   userInfo?: UserInfo;
 }
 const VideoLayout: React.FC<VideoLayoutProps> = ({ children, userInfo }) => {
-
+  const { currentVideoName } = useContext(globalContext)
   return (
     <ProLayout
       layout='top'
       logo={null}
-      title="C语言入门第一课"
+      title={currentVideoName}
       actionsRender={() =>[ <ProfileDropDown username={userInfo?.username} />]}
       contentStyle={{
         minHeight: 'calc(100vh - 64px)',

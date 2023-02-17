@@ -1,10 +1,11 @@
 import { useMyCourseDetail } from '@/hooks/queries';
 import { findItemFormList } from '@/utils/common';
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import jsCookie from 'js-cookie';
 import './index.css'
 import getVideoPlayTimeFromCookie from '@/utils/get-video-play-time-from-cookie';
+import { globalContext } from '@/contexts/global';
 
 interface VideoPageProps {
 
@@ -14,9 +15,17 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
   const { catalogId, courseId } = useParams<{courseId: string; catalogId: string;}>()
   const [courseDetail] = useMyCourseDetail(courseId);
   const targetCatlog = findItemFormList(courseDetail?.catalogs || [], 'id', catalogId);
+  const { dispatch } = useContext(globalContext)
 
   const initPlayer = () => {
     const resourceUrl = targetCatlog?.resourceUrl;
+    const videoName = targetCatlog?.name;
+    dispatch({
+      type: 'setCurrentVideoName',
+      payload: {
+        currentVideoName: videoName
+      }
+    })
     if (resourceUrl) {
       const videoObject = {
         container: `#player`,//“#”代表容器的ID，“.”或“”代表容器的class

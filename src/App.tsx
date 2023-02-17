@@ -7,8 +7,11 @@ import { useRoutes } from 'react-router-dom'
 import LoadingOrError from '@/components/LoadingOrError'
 import Layout from './layouts'
 import { getToken } from './http/token'
+import { globalContext, useGlobal } from './contexts/global'
 
 const withoutCheckLoginPath = ['/login', '/cas'];
+
+const { Provider } = globalContext;
 
 function generateRouteConfig(menuRoutes: MenuRoute[]): RouteObject[] {
 	const result: RouteObject[] = []
@@ -38,11 +41,16 @@ export default function App(): ReactElement {
 	const element = useRoutes(configs);
   const navigate = useNavigate();
   const location = useLocation();
+  const [globalState, dispatch] = useGlobal();
   useEffect(() => {
     const isLogin = !!getToken();
     if (!isLogin && !withoutCheckLoginPath.includes(location.pathname)) {
       navigate('/login');
     }
   }, [location.pathname])
-	return <Layout>{element}</Layout>
+	return (
+    <Provider value={{...globalState, dispatch}}>
+      <Layout>{element}</Layout>
+    </Provider>
+  )
 }
