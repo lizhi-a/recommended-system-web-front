@@ -27,13 +27,6 @@ const ChapterCard: React.FC<ChapterCardProps> = (props) => {
           )
         }
         <DescriptionTextItem top={`章节${index + 1}`} bottom={chapter.name} />
-        {
-          !!chapter?.progress && (
-            <span>
-              进度: {chapter?.progress}
-            </span>
-          )
-        }
       </div>
     </li>
   )
