@@ -18,9 +18,10 @@ export function useCourses(searchText?: string, page: number = 1) {
 }
 
 // 获取个人信息
-export function useMe() {
+export function useMe({enabled = true}) {
   const { data, ...rest} = useQuery(['getMe'], () => me(), {
     refetchOnWindowFocus: false,
+    enabled
   })
   const res = data?.data;
   return [res, rest] as [typeof res, typeof rest];
