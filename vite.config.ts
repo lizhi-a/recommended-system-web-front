@@ -19,12 +19,14 @@ export default defineConfig({
 		proxy: {
 			'/api': {
 				target: 'http://192.168.15.105:10000',
+				// target: 'http://192.168.48.68:10000',
 				// target: 'http://192.168.48.87:10000',
 				changeOrigin: true
 			},
-      '/minio': {
+      '/minio/': {
         target: 'http://192.168.15.105:9000',
         changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/minio/, ''),
       }
 		}
 	},

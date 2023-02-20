@@ -1,6 +1,8 @@
 import { globalContext, useGlobal } from '@/contexts/global';
-import { ProLayout } from '@ant-design/pro-components';
+import { ArrowLeftOutlined, LeftOutlined } from '@ant-design/icons';
+import { PageContainer, ProLayout } from '@ant-design/pro-components';
 import React, { useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ProfileDropDown } from './common';
 
 interface VideoLayoutProps {
@@ -8,12 +10,19 @@ interface VideoLayoutProps {
   userInfo?: UserInfo;
 }
 const VideoLayout: React.FC<VideoLayoutProps> = ({ children, userInfo }) => {
-  const { currentVideoName } = useContext(globalContext)
+  const { currentVideo } = useContext(globalContext)
+  const navigate = useNavigate();
+  const handleClickBack = () => {
+    const courseId = currentVideo?.courseId;
+    if (courseId) {
+      navigate(`/courses/detail/${courseId}`)
+    }
+  }
   return (
     <ProLayout
       layout='top'
       logo={null}
-      title={currentVideoName}
+      headerRender={false}
       actionsRender={() =>[ <ProfileDropDown userInfo={userInfo} />]}
       contentStyle={{
         minHeight: 'calc(100vh - 64px)',
@@ -22,6 +31,15 @@ const VideoLayout: React.FC<VideoLayoutProps> = ({ children, userInfo }) => {
         paddingInline: 8,
       }}
     >
+      <div className='w-full h-16 flex justify-between items-center px-4'>
+        <div className='text-lg font-medium'>
+          <ArrowLeftOutlined className='mr-2 cursor-pointer' onClick={handleClickBack} />
+          <span>{currentVideo?.name}</span>
+        </div>
+        <div>
+          <ProfileDropDown userInfo={userInfo} />
+        </div>
+      </div>
       {children}
     </ProLayout>
   )

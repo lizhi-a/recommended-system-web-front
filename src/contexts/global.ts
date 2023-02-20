@@ -1,27 +1,35 @@
 import { createContext, Reducer, useReducer } from "react";
 
 interface StateType {
-  currentVideoName: string;
+  currentVideo?: {
+    courseId?: string;
+    catalogId?: string;
+    name?: string;
+  }
 }
 
 interface ActionType {
-  type: 'setCurrentVideoName',
+  type: 'setCurrentVideo',
   payload: Partial<StateType>;
 }
 
 
 export const globalContext = createContext<StateType & { dispatch: React.Dispatch<ActionType>; }>({
-  currentVideoName: '',
+  currentVideo: {
+    courseId: undefined,
+    catalogId: undefined,
+    name: undefined,
+  },
   dispatch: () => {},
 });
 
 const globalReducer: Reducer<StateType, ActionType> = (prevState, action) => {
   const { type, payload } = action
   switch(type) {
-    case 'setCurrentVideoName': {
-      const { currentVideoName = '' } = payload;
+    case 'setCurrentVideo': {
+      const { currentVideo } = payload;
       return {
-        currentVideoName
+        currentVideo,
       }
     }
     default:
@@ -30,6 +38,6 @@ const globalReducer: Reducer<StateType, ActionType> = (prevState, action) => {
 }
 
 export function useGlobal(): [StateType, React.Dispatch<ActionType>] {
-  const [state, dispatch] = useReducer(globalReducer, { currentVideoName: '' });
+  const [state, dispatch] = useReducer(globalReducer, {});
   return [state, dispatch]
 }

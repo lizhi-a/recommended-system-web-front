@@ -60,7 +60,7 @@ const CourseDetail: React.FC = () => {
     refetchMyCourseDetail();
   }, [])
   return (
-    <div>
+    <div className='h-full flex flex-col'>
       <div className='px-4 py-2 mt-6 bg-white'>
         <Breadcrumb>
           <Breadcrumb.Item href='/courses'>首页</Breadcrumb.Item>
@@ -94,7 +94,7 @@ const CourseDetail: React.FC = () => {
         </div>
       </div>
       
-      <div className='mt-2 bg-white py-4'>
+      <div className='mt-2 flex-auto bg-white py-4'>
         <h2 className='ml-4 my-0 font-medium text-base'>课程章节</h2>
         <ul className='list-none my-0 p-0 mx-auto w-full sm:w-full md:w-2/3'>
           {

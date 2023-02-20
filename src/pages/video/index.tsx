@@ -57,9 +57,13 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
     const resourceUrl = targetCatlog?.resourceUrl;
     const videoName = targetCatlog?.name;
     dispatch({
-      type: 'setCurrentVideoName',
+      type: 'setCurrentVideo',
       payload: {
-        currentVideoName: videoName
+        currentVideo: {
+          courseId,
+          catalogId,
+          name: videoName
+        },
       }
     })
     if (resourceUrl) {
