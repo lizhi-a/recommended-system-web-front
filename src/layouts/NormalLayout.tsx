@@ -20,7 +20,8 @@ const NormalLayout: React.FC<NormalLayoutProps> = ({ children, userInfo }) => {
 		>
 			<ProLayout
 				layout='top'
-        title="vdp"
+        logo="/logo.png"
+        title="视频点播平台"
         fixedHeader
         contentStyle={{
           minHeight: 'calc(100vh - 64px)',
