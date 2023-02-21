@@ -31,7 +31,7 @@ const MyCourses: React.FC = () => {
           pageSize={20}
           current={currentPage}
           total={totalElements}
-          onChange={(page) => {() => setCurrentPage(page) }}
+          onChange={(page) => setCurrentPage(page)}
           size="small"
         />
       </div>
