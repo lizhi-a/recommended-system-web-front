@@ -1,9 +1,9 @@
 import callApi from "@/http/call-api";
 
 // 首页所有课程
-export const getCourses = ({ page, size}: PaginationRequest<{ name?: string; }>) => callApi.crypted<PaginationResponse<Course>>({
+export const getCourses = (params: PaginationRequest<{ courseName?: string; }>) => callApi.crypted<PaginationResponse<Course>>({
   url: '/api/v1/self/account/browse/course',
-  params: { page, size },
+  params,
   method: 'get',
 })
 

@@ -10,7 +10,7 @@ export interface CommonOption<D = unknown> {
 
 // 首页所有课程
 export function useCourses(searchText?: string, page: number = 1) {
-  const { data, ...rest} = useQuery(['getCourses', page], () => getCourses({ name: searchText, page: page - 1 }), {
+  const { data, ...rest} = useQuery(['getCourses', page], () => getCourses({ courseName: searchText, page: page - 1 }), {
     refetchOnWindowFocus: false
   })
   const res = data?.data;
