@@ -5,3 +5,12 @@ export const me = () =>
     url: '/api/v1/self/account/info',
     method: 'post'
   })
+
+  export const logout = (params: { userName: string; }) => callApi({
+    url: '/api/v1/cas/logout',
+    method: 'post',
+    data: {
+      ...params,
+      state: 1,
+    },
+  })

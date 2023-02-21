@@ -1,3 +1,4 @@
+import { logout } from '@/api/login';
 import { removeToken } from '@/http/token';
 import { PoweroffOutlined } from '@ant-design/icons';
 import { Avatar, Dropdown, Space } from 'antd';
@@ -15,8 +16,12 @@ export const ProfileDropDown: React.FC<ProfileDropDownProps> = (props) => {
           {
             label: '退出登录',
             onClick: () => {
-              removeToken();
-              window.location.replace('/login')
+              if (userInfo?.username) {
+                logout({ userName: userInfo.username}).finally(() => {
+                  removeToken();
+                  window.location.replace('/login')
+                })
+              }
             },
             key: 'logout',
             icon: <PoweroffOutlined />
