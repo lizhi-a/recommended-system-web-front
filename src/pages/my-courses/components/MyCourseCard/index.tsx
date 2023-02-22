@@ -17,6 +17,8 @@ const MyCourseCard: React.FC<MyCourseCardProps> = (props) => {
     }
     event.preventDefault();
   }
+  const hasCatalogs = (course?.catalogs?.length || 0) > 0;
+  const realProgress = course?.courseProgress || 0;
   if (!course) {
     return <></>
   }
@@ -38,7 +40,7 @@ const MyCourseCard: React.FC<MyCourseCardProps> = (props) => {
             <div className='flex'>
               <Typography.Text type='secondary' className='mr-1'>进度</Typography.Text>
               <div className='flex-1'>
-                <Progress percent={course?.courseProgress || 0} />
+                <Progress percent={hasCatalogs ? realProgress : 100} />
               </div>
             </div>
           </div>
