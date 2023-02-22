@@ -1,3 +1,5 @@
+import Copyright from '@/components/Copyright';
+import Footer from '@/components/Footer';
 import { globalContext, useGlobal } from '@/contexts/global';
 import { ArrowLeftOutlined, LeftOutlined } from '@ant-design/icons';
 import { PageContainer, ProLayout } from '@ant-design/pro-components';
@@ -32,6 +34,7 @@ const VideoLayout: React.FC<VideoLayoutProps> = ({ children, userInfo }) => {
         paddingBlock: 0,
         paddingInline: 8,
       }}
+      footerRender={Footer}
     >
       <div className='w-full h-16 flex justify-between items-center px-4'>
         <div className='text-lg font-medium'>

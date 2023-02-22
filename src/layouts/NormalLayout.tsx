@@ -3,6 +3,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ProfileDropDown } from './common';
 import { routes } from '@/config/routes'
+import Copyright from '@/components/Copyright';
+import Footer from '@/components/Footer';
 
 
 interface NormalLayoutProps {
@@ -38,6 +40,7 @@ const NormalLayout: React.FC<NormalLayoutProps> = ({ children, userInfo }) => {
 					</Link>
 				)}
         route={{ routes }}
+        footerRender={Footer}
 			>
         {
           <div className='container mx-auto min-h-screen'>{children}</div>

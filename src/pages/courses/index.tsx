@@ -48,7 +48,7 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
             }
           </section>
       }
-      <div className='w-full flex justify-end'>
+      <div className='w-full flex justify-center'>
         <Pagination
           showSizeChanger={false}
           pageSize={20}
