@@ -24,7 +24,7 @@ const MyCourseCard: React.FC<MyCourseCardProps> = (props) => {
   }
   return (
     <div className='w-full sm:w-full  md:w-1/2 lg:w-1/3 xl:w-1/4 px-4 py-3 flex' style={{ minHeight: 200 }}>
-      <Link to={`/courses/detail/${course.id}`} className="block w-full">
+      <Link to={`/course-detail/${course.id}`} className="block w-full">
         <div className='flex-auto bg-white shadow-md transform transition hover:shadow-xl cursor-pointer rounded-lg overflow-hidden my-course-card'>
           <div className='w-full h-40'>
             <Image className="object-cover object-center" width="100%" height={160} preview={false} src={course.coverUrl} />

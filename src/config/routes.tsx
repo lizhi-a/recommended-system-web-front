@@ -21,7 +21,7 @@ export const routes: MenuRoute[] = [
 		component: lazy(() => import('@/pages/courses')),
 	},
   {
-    path: '/courses/detail/:id',
+    path: '/course-detail/:id',
     name: '课程详情',
     component: lazy(() => import('@/pages/courses/[id]')),
     hideInMenu: true,

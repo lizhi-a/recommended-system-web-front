@@ -15,7 +15,9 @@ const VideoLayout: React.FC<VideoLayoutProps> = ({ children, userInfo }) => {
   const handleClickBack = () => {
     const courseId = currentVideo?.courseId;
     if (courseId) {
-      navigate(`/courses/detail/${courseId}`)
+      navigate(`/course-detail/${courseId}`, {
+        replace: true,
+      })
     }
   }
   return (
