@@ -1,4 +1,4 @@
-import { useMyCourseDetail } from '@/hooks/queries';
+import { useMyCourseDetail, useMyCourses } from '@/hooks/queries';
 import { findItemFormList, getProgress } from '@/utils/common';
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -20,6 +20,7 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
   const maxProgressRef = useRef(0); // 播放过的最大进度，用途：用户将视频往左拖后，播放未达到这个进度就不进行上报
   const { catalogId, courseId } = useParams<{courseId: string; catalogId: string;}>()
   const [courseDetail, { refetch: refetchCourseDetail}] = useMyCourseDetail(courseId);
+  const [, { refetch: refetchMyCourses}] = useMyCourses();
 
   // 查找播放的章节
   const targetCatlog = useMemo(() => {
@@ -138,6 +139,7 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
     maxProgressRef.current = 0;
     reportMutation.mutateAsync(100).then(() => {
       refetchCourseDetail();
+      refetchMyCourses();
     })
   }
 

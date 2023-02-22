@@ -31,7 +31,11 @@ const CourseDetail: React.FC = () => {
   }
 
   const handleContinueCourse = async () => {
-    const catelogId = myCourseDetail?.catalogs?.[0]?.id;
+    let catelogId = myCourseDetail?.catalogs?.[0]?.id;
+    const targetCatalog = myCourseDetail?.catalogs?.find((item) => !item.progress || item.progress < 100);
+    if (targetCatalog) {
+      catelogId = targetCatalog.id;
+    }
     if (catelogId) {
       navigate(`/video/${courseId}/${catelogId}`)
     } else {

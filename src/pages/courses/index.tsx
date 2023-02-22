@@ -2,7 +2,6 @@ import { useCourses } from '@/hooks/queries';
 import { Input, Pagination } from 'antd';
 import { SearchProps } from 'antd/es/input';
 import React, { useState } from 'react';
-import LoadingOrError from '@/components/LoadingOrError';
 import CourseCard from './components/CourseCard';
 import SkeletonCard from '@/components/SkeletonCard';
 

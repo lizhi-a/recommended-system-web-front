@@ -19,7 +19,7 @@ const CourseCard: React.FC<CourseCardProps> = (props) => {
           </div>
           <div className='p-4'>
             <Typography.Text className='double-line-ellipsis pb-2 m-0 font-medium te'>{course.name}</Typography.Text>
-            <div className='text-ant-text-secondary m-0 p-0'>{course.orgName}</div>
+            <div className='text-ant-text-secondary m-0 p-0 h-3'>{course.orgName}</div>
           </div>
         </div>
       </Link>
