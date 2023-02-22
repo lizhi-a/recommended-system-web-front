@@ -8,8 +8,8 @@ export const me = () =>
 
   export const logout = (params: { userName: string; }) => callApi({
     url: '/api/v1/cas/logout',
-    method: 'post',
-    data: {
+    method: 'get',
+    params: {
       ...params,
       state: 1,
     },
