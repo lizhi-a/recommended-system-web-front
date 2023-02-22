@@ -6,7 +6,7 @@ export default () => (
 		<div className='fixed top-0 flex w-full h-16 bg-blue-900 justify-center items-center' >
 			<div className='w-full md:w-3/5 flex items-center'>
 				<img src="/images/schoolIogo.png" className='h-10 mr-4' />
-				<span className='text-white text-lg font-medium'>视频点播平台</span>
+				<span className='text-white text-lg font-medium'>在线点播学习中心</span>
 			</div>
 		</div>
 		{/* 背景图 */}
