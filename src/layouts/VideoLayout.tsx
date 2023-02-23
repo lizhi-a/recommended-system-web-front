@@ -1,11 +1,12 @@
 import Copyright from '@/components/Copyright';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
+import ProfileDropDown from '@/components/Header/ProfileDropDown';
 import { globalContext, useGlobal } from '@/contexts/global';
 import { ArrowLeftOutlined, LeftOutlined } from '@ant-design/icons';
 import { PageContainer, ProLayout } from '@ant-design/pro-components';
 import React, { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ProfileDropDown } from './common';
 
 interface VideoLayoutProps {
   children?: React.ReactNode;
@@ -23,31 +24,19 @@ const VideoLayout: React.FC<VideoLayoutProps> = ({ children, userInfo }) => {
     }
   }
   return (
-    <ProLayout
-      layout='top'
-      logo={null}
-      headerRender={false}
-      actionsRender={() =>[ <ProfileDropDown userInfo={userInfo} />]}
-      contentStyle={{
-        minHeight: '100vh',
-        margin: 0, // umi4的坑，生产环境会在这个元素上加 margin-block: 24px；margin-inline: 40px; 导致出现横向滚动条
-        paddingBlock: 0,
-        paddingInline: 8,
-      }}
-      footerRender={Footer}
-    >
-      <div className='w-full h-16 flex justify-between items-center px-4'>
-        <div className='text-lg font-medium'>
+    <div className='min-h-screen'>
+      <header className='w-screen h-16 items-center justify-between bg-blue-400 px-6 flex'>
+        <div className='text-lg font-medium text-white'>
           <ArrowLeftOutlined className='mr-2 cursor-pointer' onClick={handleClickBack} />
           <span>{currentVideo?.name}</span>
         </div>
-        <div>
-          <ProfileDropDown userInfo={userInfo} />
-        </div>
-      </div>
+        <ProfileDropDown userInfo={userInfo} />
+      </header>
       {children}
-    </ProLayout>
+    </div>
   )
 }
 
 export default VideoLayout;
+
+

@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import legacy from '@vitejs/plugin-legacy'
-
+import vitePluginImp from 'vite-plugin-imp'
 
 
 // https://vitejs.dev/config/
@@ -12,6 +12,14 @@ export default defineConfig({
     legacy({
       targets: ['defaults', 'Chrome 64', 'ios 7'],
     }),
+    vitePluginImp({
+      libList: [
+        {
+          libName: "antd",
+          style: (name) => `antd/es/${name}/style`,
+        },
+      ],
+    })
   ],
   css: {
     // 预处理器配置项

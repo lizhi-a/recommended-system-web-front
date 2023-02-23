@@ -1,6 +1,6 @@
 import { registerCourseForMe } from '@/api/courses';
 import { useMyCourseDetail } from '@/hooks/queries';
-import { Breadcrumb, Button, Image } from 'antd';
+import { Breadcrumb, Button, Image, Modal } from 'antd';
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ChapterCard from './components/ChapterCard';
@@ -17,16 +17,32 @@ const CourseDetail: React.FC = () => {
   const navigate = useNavigate();
 
   const handleRegisterCourse = async () => {
-    if (courseId) {
-      await registerCourseForMe({
-        id: courseId
+    const selfRegisterable = false;
+    if (!selfRegisterable) {
+      Modal.info({
+        title: '本课程暂未开放自助选课，请联系老师',
+        okText: '我知道了',
       })
-      const catelogId = myCourseDetail?.catalogs?.[0]?.id;
-      if (catelogId) {
-        navigate(`/video/${courseId}/${catelogId}`)
-      } else {
-        refetchMyCourseDetail();
-      }
+      return
+    } else if (!myCourseDetail?.createAt) {
+      Modal.confirm({
+        title: `要开始学习${myCourseDetail?.name || ''}`,
+        async onOk() {
+          if (courseId) {
+            await registerCourseForMe({
+              id: courseId
+            })
+            const catelogId = myCourseDetail?.catalogs?.[0]?.id;
+            if (catelogId) {
+              navigate(`/video/${courseId}/${catelogId}`)
+            } else {
+              refetchMyCourseDetail();
+            }
+          }
+        },
+        okText: '确认',
+        cancelText: '取消'
+      })
     }
   }
 
@@ -98,24 +114,28 @@ const CourseDetail: React.FC = () => {
         </div>
       </div>
       
-      <div className='mt-2 flex-auto bg-white py-4'>
-        <h2 className='ml-4 my-0 font-medium text-base'>课程章节</h2>
-        <ul className='list-none my-0 p-0 mx-auto w-full sm:w-full md:w-2/3'>
-          {
-            courseId && (
-              myCourseDetail?.catalogs?.map((item, index) => (
-                <ChapterCard
-                  chapter={item}
-                  index={index}
-                  key={item.id}
-                  courseId={courseId}
-                  onClick={handleClickChapter}
-                />
-              )) 
-            )
-          }
-        </ul>
-      </div>
+      {
+        !!myCourseDetail?.createAt && (
+          <div className='mt-2 flex-auto bg-white py-4'>
+            <h2 className='ml-4 my-0 font-medium text-base'>课程章节</h2>
+            <ul className='list-none my-0 p-0 mx-auto w-full sm:w-full md:w-2/3'>
+              {
+                courseId && (
+                  myCourseDetail?.catalogs?.map((item, index) => (
+                    <ChapterCard
+                      chapter={item}
+                      index={index}
+                      key={item.id}
+                      courseId={courseId}
+                      onClick={handleClickChapter}
+                    />
+                  )) 
+                )
+              }
+            </ul>
+          </div>
+        )
+      }
     </div>
   )
 }

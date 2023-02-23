@@ -6,7 +6,7 @@ import { Avatar, Dropdown, Space } from 'antd';
 interface ProfileDropDownProps {
   userInfo?: UserInfo;
 } 
-export const ProfileDropDown: React.FC<ProfileDropDownProps> = (props) => {
+const ProfileDropDown: React.FC<ProfileDropDownProps> = (props) => {
   const { userInfo } = props;
   return (
     <Dropdown
@@ -30,11 +30,11 @@ export const ProfileDropDown: React.FC<ProfileDropDownProps> = (props) => {
       }}
     >
       <Space>
-        <Avatar src={userInfo?.photo} />
-        <span>{userInfo?.realName}</span>
+        <Avatar className='cursor-pointer' src={userInfo?.photo} />
+        <span className='text-white cursor-pointer'>{userInfo?.realName}</span>
       </Space>
     </Dropdown>
   )
 }
 
-export default {};
+export default ProfileDropDown;

@@ -1,14 +1,15 @@
 import { useMyCourseDetail, useMyCourses } from '@/hooks/queries';
 import { findItemFormList, getProgress } from '@/utils/common';
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import './index.css'
 import getVideoPlayTimeFromCookie from '@/utils/get-video-play-time-from-cookie';
 import { globalContext } from '@/contexts/global';
 import { useMutation } from '@tanstack/react-query';
-import { reportFirstPlay, reportVideoPlay } from '@/api/courses';
+import { registerCourseForMe, reportFirstPlay, reportVideoPlay } from '@/api/courses';
 import dayjs from 'dayjs';
 import useInterval from '@/hooks/useInterval';
+import ChapterCard from '../courses/components/ChapterCard';
 
 const REPORT_CYCLE_MS = 10000 // 上报周期
 interface VideoPageProps {
@@ -21,6 +22,7 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
   const { catalogId, courseId } = useParams<{courseId: string; catalogId: string;}>()
   const [courseDetail, { refetch: refetchCourseDetail}] = useMyCourseDetail(courseId);
   const [, { refetch: refetchMyCourses}] = useMyCourses();
+  const navigate = useNavigate();
 
   // 查找播放的章节
   const targetCatlog = useMemo(() => {
@@ -181,11 +183,46 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
       removeAllListeners
     }
   }, [targetCatlog])
+
+  const handleClickChapter = async (chapter?: Catlog) => {
+    if (courseId) {
+      // 用户没有注册该课程，需要注册
+      if (!courseDetail?.createAt) {
+        await registerCourseForMe({
+          id: courseId
+        })
+      }
+      const catelogId = chapter?.id;
+      if (catelogId) {
+        navigate(`/video/${courseId}/${catelogId}`)
+      } else {
+        refetchCourseDetail();
+      }
+    }
+  }
   return (
-    <div className='w-full player-container'>
+    <div>
       <div
         id="player"
       />
+      <div className='mt-2 flex-auto bg-white py-4'>
+        <h2 className='ml-4 my-0 font-medium text-base'>课程章节</h2>
+        <ul className='list-none my-0 p-0 mx-auto w-full sm:w-full md:w-2/3'>
+          {
+            courseId && (
+              courseDetail?.catalogs?.map((item, index) => (
+                <ChapterCard
+                  chapter={item}
+                  index={index}
+                  key={item.id}
+                  courseId={courseId}
+                  onClick={handleClickChapter}
+                />
+              )) 
+            )
+          }
+        </ul>
+      </div>
     </div>
   )
 }
