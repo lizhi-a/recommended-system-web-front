@@ -10,9 +10,19 @@ export default defineConfig({
 	plugins: [
     react(),
     legacy({
-      targets: ['defaults', 'Chrome 64', 'not IE 11'],
+      targets: ['defaults', 'Chrome 64', 'ios 7'],
     }),
   ],
+  css: {
+    // 预处理器配置项
+    preprocessorOptions: {
+      less: {
+        charset: false,
+        javascriptEnabled: true,
+        additionalData: '@root-entry-name: default;',
+      },
+    },
+  },
   build: {
     minify: 'terser',
     rollupOptions: {

@@ -10,12 +10,12 @@ interface LayoutProperties {
 	children?: React.ReactNode
 }
 
-const blankPagePath = new Set(['/login', '/cas'])
+const blankPagePath = ['/login', '/cas']
 
 export const Layout: React.FC<LayoutProperties> = ({ children }) => {
 	const location = useLocation();
-  const [me] = useMe({ enabled: !blankPagePath.has(location.pathname)});
-	if (blankPagePath.has(location.pathname)) {
+  const [me] = useMe({ enabled: !blankPagePath.includes(location.pathname)});
+	if (blankPagePath.includes(location.pathname)) {
 		return (
 			<BlankLayout>{children}</BlankLayout>
 		)
