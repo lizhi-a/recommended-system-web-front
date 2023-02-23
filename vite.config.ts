@@ -10,11 +10,24 @@ export default defineConfig({
 	plugins: [
     react(),
     legacy({
-      targets: ['defaults', 'not IE 11'],
+      targets: ['defaults', 'Chrome 64', 'not IE 11'],
     }),
   ],
   build: {
-    minify: 'terser'
+    minify: 'terser',
+    rollupOptions: {
+      output: {
+          manualChunks(id: any): string {  
+              if (id.includes("node_modules")) {
+                  return id
+                          .toString()
+                          .split("node_modules/")[1]
+                          .split("/")[0]
+                          .toString();
+          }
+          }
+      }
+    }
   },
 	resolve: {
 		alias: [
