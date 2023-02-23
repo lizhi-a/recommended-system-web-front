@@ -75,7 +75,8 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
         video: targetCatlog?.resourceUrl,//视频地址
         cookie: catalogId,//cookie名称，在同一域中请保持唯一
         timeScheduleAdjust: 1, // timeScheduleAdjust: 5开启，会导致seek: cookie失效
-        playbackrateOpen: false
+        playbackrateOpen: false,
+        autoplay: true,
       };
       playerRef.current = new window.ckplayer(videoObject);
     }
@@ -103,7 +104,7 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
         player.vars('timeScheduleAdjust', timeScheduleAdjust);
         player.vars('playbackrateOpen', isStudyComplete);
         player.removeListener('play', handleFirstPlay)
-      }, 100)
+      }, 200)
     }, 100)
   }
 
