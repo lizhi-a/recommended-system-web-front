@@ -21,6 +21,8 @@ interface CourseDetail {
   createAt: string | null;
   type: 'UNDONE' | 'COMPLETED' | null;
   courseProgress?: number;
+  startTime?: string;
+  endTime?: string;
 }
 
 interface Catlog {

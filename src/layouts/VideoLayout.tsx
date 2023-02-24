@@ -1,12 +1,8 @@
-import Copyright from '@/components/Copyright';
-import Footer from '@/components/Footer';
-import Header from '@/components/Header';
 import ProfileDropDown from '@/components/Header/ProfileDropDown';
-import { globalContext, useGlobal } from '@/contexts/global';
-import { ArrowLeftOutlined, LeftOutlined } from '@ant-design/icons';
-import { PageContainer, ProLayout } from '@ant-design/pro-components';
+import { globalContext } from '@/contexts/global';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import React, { useContext } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 interface VideoLayoutProps {
   children?: React.ReactNode;

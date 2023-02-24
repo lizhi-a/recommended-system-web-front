@@ -1,6 +1,7 @@
 import { registerCourseForMe } from '@/api/courses';
 import { useMyCourseDetail } from '@/hooks/queries';
 import { Breadcrumb, Button, Image, Modal } from 'antd';
+import dayjs from 'dayjs';
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ChapterCard from './components/ChapterCard';
@@ -11,13 +12,26 @@ const Box: React.FC<{ children?: React.ReactNode; className?: string; }> = ({ ch
   </div>
 )
 
+const FORMAT_STR = 'YYYY-MM-DD HH:mm'
+
 const CourseDetail: React.FC = () => {
   const { id: courseId } = useParams<{ id: string; }>();
   const [myCourseDetail, { refetch: refetchMyCourseDetail}] = useMyCourseDetail(courseId);
   const navigate = useNavigate();
 
+
   const handleRegisterCourse = async () => {
     const selfRegisterable = false;
+    const now = dayjs();
+    const startTime = dayjs(myCourseDetail?.startTime);
+    const entTime = dayjs(myCourseDetail?.endTime);
+    if (now.isBefore(startTime) || now.isAfter(entTime)) {
+      Modal.info({
+        title: <div><p>本课程开课时间为：</p><p>{startTime.format(FORMAT_STR)}~{entTime.format(FORMAT_STR)}</p></div>,
+        okText: '我知道了',
+      })
+      return
+    }
     if (!selfRegisterable) {
       Modal.info({
         title: '本课程暂未开放自助选课，请联系老师',
@@ -47,6 +61,16 @@ const CourseDetail: React.FC = () => {
   }
 
   const handleContinueCourse = async () => {
+    const now = dayjs();
+    const startTime = dayjs(myCourseDetail?.startTime);
+    const entTime = dayjs(myCourseDetail?.endTime);
+    if (now.isBefore(startTime) || now.isAfter(entTime)) {
+      Modal.info({
+        title: <div><p>本课程开课时间为：</p><p>{startTime.format(FORMAT_STR)}~{entTime.format(FORMAT_STR)}</p></div>,
+        okText: '我知道了',
+      })
+      return
+    }
     let catelogId = myCourseDetail?.catalogs?.[0]?.id;
     const targetCatalog = myCourseDetail?.catalogs?.find((item) => !item.progress || item.progress < 100);
     if (targetCatalog) {
@@ -61,6 +85,16 @@ const CourseDetail: React.FC = () => {
 
   const handleClickChapter = async (chapter?: Catlog) => {
     if (courseId) {
+      const now = dayjs();
+      const startTime = dayjs(myCourseDetail?.startTime);
+      const entTime = dayjs(myCourseDetail?.endTime);
+      if (now.isBefore(startTime) || now.isAfter(entTime)) {
+        Modal.info({
+          title: <div><p>本课程开课时间为：</p><p>{startTime.format(FORMAT_STR)}~{entTime.format(FORMAT_STR)}</p></div>,
+          okText: '我知道了',
+        })
+        return
+      }
       // 用户没有注册该课程，需要注册
       if (!myCourseDetail?.createAt) {
         await registerCourseForMe({
