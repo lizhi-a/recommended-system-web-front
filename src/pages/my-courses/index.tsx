@@ -10,7 +10,7 @@ const MyCourses: React.FC = () => {
   const totalElements = data?.totalElements || 0;
   return (
     <div>
-      <h1>我的课程</h1>
+      <h1 className='pt-8 text-lg'>我的课程</h1>
       <section className='flex justify-start flex-wrap'>
         {
           (isLoading || isError) ? (
