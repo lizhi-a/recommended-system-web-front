@@ -129,7 +129,7 @@ const CourseDetail: React.FC = () => {
           <Box className="md:">
             <div className='flex justify-between pt-6'>
               <h1 className='text-base font-medium m-0 p-0 w-1/2 overflow-hidden text-ellipsis whitespace-nowrap'>{myCourseDetail?.name}</h1>
-              <div className='text-ant-text-secondary text-base'>开通组织：{myCourseDetail?.orgName}</div>
+              <div className='text-ant-text-secondary text-base'>开通单位：{myCourseDetail?.orgName}</div>
             </div>
             <div className='mt-8 mb-2 text-ant-text-secondary leading-7 text-base' style={{ minHeight: 128 }}>
               课程介绍：
