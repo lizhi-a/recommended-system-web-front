@@ -9,7 +9,7 @@ interface NormalLayoutProps {
 
 const NormalLayout: React.FC<NormalLayoutProps> = ({ children, userInfo }) => {
   return (
-    <div className='min-h-screen'>
+    <div className='min-h-screen bg-slate-50'>
       <Header userInfo={userInfo} />
       <div className='container mx-auto '>
         {children}
