@@ -1,36 +1,49 @@
-import { Button } from 'antd'
+import { login } from '@/api/login'
+import { setToken } from '@/http/token';
+import { Button, Form, Input, notification } from 'antd'
 
-export default () => (
-	<div className=' min-h-screen flex justify-center items-center'>
-		{/* 顶部导航栏 */}
-		<div className='fixed top-0 flex w-full h-16 bg-blue-900 justify-center items-center' >
-			<div className='w-full md:w-3/5 flex items-center'>
-				<img src="/images/schoolIogo.png" className='h-10 mr-4' />
-				<span className='text-white text-lg font-medium'>在线点播学习中心</span>
-			</div>
-		</div>
-		{/* 背景图 */}
-		<img src="/images/bgNow.jpg" className='w-full h-full absolute -z-10' />
-		{/* 中间的图片及表单 */}
-		<div className='flex flex-auto justify-center items-center '>
-			<div className='w-0  md:w-2/5' >
-				<img src="/images/miniBg1.png" className='w-full h-full object-contain object-center' />
-			</div>
-			<div className='bg-white w-64 h-64 p-4 relative rounded-md shadow-md'>
-				<h3 className='text-center'>登录</h3>
-				<div className='text-xs text-center'>
-					<p>点击前往统一身份认证网关进行身份认证</p>
+export default () => {
+
+	const handleFinish = (values: { userName: string; password: string }) => {
+		return login(values).then((res) => {
+			setToken(res.data.content.token)
+			localStorage.setItem("userInfo", JSON.stringify(res.data.content))
+			notification.success({
+				message: '登录成功'
+			})
+			window.location.replace('/courses')
+		})
+	}
+
+	return (
+		<div className='min-h-screen flex justify-center items-center'>
+			{/* 顶部导航栏 */}
+			<div className='fixed top-0 flex w-full h-16 bg-blue-900 justify-center items-center' >
+				<div className='w-full md:w-3/5 flex items-center'>
+					<span className='text-white text-lg font-medium'>教育资源推荐系统</span>
 				</div>
-				<form
-					title='vdp'
-					action='/api/v1/cas/signIn'
-					method='get'
-					className='absolute bottom-10 left-1/2 -ml-8 '
-				>
-					<input name="state" value={1} hidden />
-					<Button type="primary" htmlType='submit' >登录</Button>
-				</form>
 			</div>
-		</div>
-	</div >
-)
+			{/* 中间的图片及表单 */}
+			<div className='flex flex-auto justify-center items-center'>
+				<div className='bg-white w-96 h-60 p-4 relative rounded-md shadow-md'>
+					<h2 className='text-center'>登录</h2>
+					<Form
+						title='login'
+						onFinish={handleFinish}
+						method='get'
+						labelCol={{ span: 4 }}
+						className='flex flex-col justify-center'
+					>
+						<Form.Item name='userName' label='用户名'>
+							<Input />
+						</Form.Item>
+						<Form.Item name='password' label='密码'>
+							<Input />
+						</Form.Item>
+						<Button type="primary" htmlType='submit'>登录</Button>
+					</Form>
+				</div>
+			</div>
+		</div >
+	)
+}

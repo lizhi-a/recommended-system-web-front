@@ -1,13 +1,3 @@
-interface UserInfo {
-  uid: string;
-  username: string;
-  status: string;
-  orgName: string;
-  accountCourses: AccountCourse[];
-  expireAt: string;
-  realName: string;
-  photo: string;
-}
 
 interface AccountCourse {
   courseId: string;
@@ -15,4 +5,8 @@ interface AccountCourse {
   type: string;
   courseProgress: number;
   createAt: string;
+}
+
+interface loginType {
+  content: UserInfo & { token: string };
 }

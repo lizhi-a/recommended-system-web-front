@@ -1,6 +1,7 @@
 import { Image, Typography } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import courseImg from '../../../../public/images/course.png'
 
 interface CourseCardProps {
   course?: Course;
@@ -15,11 +16,11 @@ const CourseCard: React.FC<CourseCardProps> = (props) => {
       <Link to={`/course-detail/${course.id}`} className="block w-full">
         <div className='flex-auto bg-white shadow-md transform transition hover:shadow-xl cursor-pointer rounded-lg overflow-hidden'>
           <div className='w-full h-40'>
-            <Image className="object-cover object-center" width="100%" height={160} preview={false} src={course.cover} />
+            <Image className="object-cover object-center" width="100%" height={160} preview={false} src={courseImg} />
           </div>
           <div className='p-4'>
             <Typography.Text className='double-line-ellipsis pb-2 m-0 font-medium te'>{course.name}</Typography.Text>
-            <div className='text-ant-text-secondary m-0 p-0 h-3'>{course.orgName}</div>
+            <div className='text-ant-text-secondary m-0 p-0 h-3'>{course.org}</div>
           </div>
         </div>
       </Link>

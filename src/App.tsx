@@ -9,15 +9,15 @@ import Layout from './layouts'
 import { getToken } from './http/token'
 import { globalContext, useGlobal } from './contexts/global'
 
-const withoutCheckLoginPath = ['/login', '/cas'];
+const withoutCheckLoginPath = ['/login'];
 
 const { Provider } = globalContext;
 
 function generateRouteConfig(menuRoutes: MenuRoute[]): RouteObject[] {
-	const result: RouteObject[] = []
-	for (const menuRouteItem of menuRoutes) {
-		const routeObjectItem: RouteObject = {}
-		routeObjectItem.path = menuRouteItem.path
+  const result: RouteObject[] = []
+  for (const menuRouteItem of menuRoutes) {
+    const routeObjectItem: RouteObject = {}
+    routeObjectItem.path = menuRouteItem.path
     if (menuRouteItem.redirect) {
       routeObjectItem.element = <Navigate to={menuRouteItem.redirect} />
     } else if (menuRouteItem.component) {
@@ -31,14 +31,15 @@ function generateRouteConfig(menuRoutes: MenuRoute[]): RouteObject[] {
         routeObjectItem.children = generateRouteConfig(menuRouteItem.routes)
       }
     }
-		result.push(routeObjectItem)
-	}
-	return result
+    result.push(routeObjectItem)
+  }
+
+  return result
 }
 
 export default function App(): ReactElement {
-	const configs = generateRouteConfig(routes);
-	const element = useRoutes(configs);
+  const configs = generateRouteConfig(routes);
+  const element = useRoutes(configs);
   const navigate = useNavigate();
   const location = useLocation();
   const [globalState, dispatch] = useGlobal();
@@ -48,8 +49,8 @@ export default function App(): ReactElement {
       navigate('/login');
     }
   }, [location.pathname])
-	return (
-    <Provider value={{...globalState, dispatch}}>
+  return (
+    <Provider value={{ ...globalState, dispatch }}>
       <Layout>{element}</Layout>
     </Provider>
   )

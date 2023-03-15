@@ -1,16 +1,20 @@
 import callApi from '@/http/call-api'
 
-export const me = () =>
-	callApi.crypted<UserInfo>({
-    url: '/api/v1/self/account/info',
-    method: 'post'
-  })
+export const me = () => callApi<UserInfo>({
+  url: '/api/login',
+  method: 'post'
+})
 
-  export const logout = (params: { userName: string; }) => callApi({
-    url: '/api/v1/cas/logout',
-    method: 'get',
-    params: {
-      ...params,
-      state: 1,
-    },
-  })
+export const login = (params: { userName: string; password: string }) => callApi<loginType>({
+  url: '/api/login',
+  method: 'post',
+  data: params,
+  contentType: 'multipart',
+})
+
+
+export const logout = (params: { userName: string; }) => callApi({
+  url: '/api/logout',
+  method: 'get',
+  params,
+})

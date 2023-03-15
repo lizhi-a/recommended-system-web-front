@@ -1,12 +1,12 @@
 import { lazy } from 'react'
 
 export type MenuRoute = {
-	path: string
-	name?: string
-	icon?: React.ReactNode | string
-	component?: React.LazyExoticComponent<React.FC>
-	hideInMenu?: boolean
-	routes?: MenuRoute[]
+  path: string
+  name?: string
+  icon?: React.ReactNode | string
+  component?: React.LazyExoticComponent<React.FC>
+  hideInMenu?: boolean
+  routes?: MenuRoute[]
   redirect?: string;
 }
 
@@ -15,11 +15,11 @@ export const routes: MenuRoute[] = [
     path: '/',
     redirect: '/courses'
   },
-	{
-		path: '/courses',
-		name: '首页',
-		component: lazy(() => import('@/pages/courses')),
-	},
+  {
+    path: '/courses',
+    name: '首页',
+    component: lazy(() => import('@/pages/courses')),
+  },
   {
     path: '/course-detail/:id',
     name: '课程详情',
@@ -38,13 +38,23 @@ export const routes: MenuRoute[] = [
     hideInMenu: true,
   },
   {
-    path: '/login',
-    component: lazy(() => import('@/pages/login')),
-    hideInMenu: true,
+    name: '系统设置',
+    path: '/system',
+    redirect: '/system/personal-imformation',
   },
   {
-    path: '/cas',
-    component: lazy(() => import('@/pages/cas')),
+    name: '个人信息',
+    path: '/system/personal-imformation',
+    component: lazy(() => import('@/pages/system/personal-information')),
+  },
+  {
+    name: '修改密码',
+    path: '/system/update-password',
+    component: lazy(() => import('@/pages/system/update-password')),
+  },
+  {
+    path: '/login',
+    component: lazy(() => import('@/pages/login')),
     hideInMenu: true,
   },
 ]
