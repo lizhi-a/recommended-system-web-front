@@ -10,3 +10,8 @@ declare namespace UserData {
     major: string;
   }
 }
+
+declare namespace UserParams {
+  type Update = Omit<UserData.User, 'label'> & { label: string }
+  type SignIn = Omit<UserData.User, 'id' | 'label'> & { label: string }
+}

@@ -1,22 +1,31 @@
 import { updatePassword } from '@/api/updatePwd';
+import { useUserInfo } from '@/hooks/queries';
+import { removeToken } from '@/http/token';
 import regs from '@/utils/reg';
 import { Button, Form, Input, notification, Typography } from 'antd';
 import React from 'react';
 
 const UpdatePwd: React.FC = () => {
   const [form] = Form.useForm();
+  const user = JSON.parse(localStorage.getItem('userInfo') || '')
+  const [userInfo] = useUserInfo({ id: user?.id })
 
   const handleFinish = (values: UpdatePasswordParams.Update) => {
-    return updatePassword(values).then(() => {
-      notification.success({
-        duration: 1,
-        message: '修改成功，请重新登录',
-        onClose: () => {
-          sessionStorage.clear()
-          location.reload()
-        }
+    if (userInfo) {
+      return updatePassword({
+        ...values,
+        id: userInfo?.id,
+      }).then(() => {
+        notification.success({
+          duration: 1,
+          message: '修改成功，请重新登录',
+          onClose: () => {
+            removeToken();
+            window.location.replace('/login')
+          }
+        })
       })
-    })
+    }
   }
 
   return (

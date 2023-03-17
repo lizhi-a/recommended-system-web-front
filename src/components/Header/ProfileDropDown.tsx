@@ -11,7 +11,6 @@ const ProfileDropDown: React.FC<ProfileDropDownProps> = (props) => {
   // const { userInfo } = props;
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '')
   const navigate = useNavigate()
-  console.log(userInfo)
 
   return (
     <Dropdown

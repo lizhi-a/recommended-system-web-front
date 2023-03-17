@@ -16,8 +16,6 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const [data, { refetch, isLoading, isError }] = useCourses({ name: searchText, type, page: currentPage })
   const totalElements = data?.totalElements || 0
 
-  console.log('data', data)
-
   const handleSearchChange: SearchProps['onChange'] = (e) => {
     setSearchText(e.target.value)
   }

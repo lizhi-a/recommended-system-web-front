@@ -1,12 +1,23 @@
-import { Typography } from "antd"
+import { AppstoreFilled } from "@ant-design/icons";
+import { Space, Typography } from "antd"
+interface DescriptionItemProps {
+  title?: string;
+  children?: React.ReactNode;
+}
 
-const DescriptionItem: React.FC = (props) => {
-  const { title, }
+const DescriptionItem: React.FC<DescriptionItemProps> = (props) => {
+  const { title, children } = props
+
   return (
-    <div>
-      <Typography.Title level={2}>{props.title}</Typography.Title>
-      <div>
-        {dom}
+    <div className="mb-6">
+      <Typography.Title level={3}>
+        <Space>
+          <AppstoreFilled className="text-emerald-400" />
+          {title}
+        </Space>
+      </Typography.Title>
+      <div className="text-gray-500" style={{ textIndent: '2rem' }}>
+        {children}
       </div>
     </div>
   )

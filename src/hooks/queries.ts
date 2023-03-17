@@ -50,7 +50,6 @@ export function useCourseDetail(id?: string, options?: CommonOption<CourseDetail
       options?.onSuccess?.(data?.data)
     },
   })
-  console.log(data)
   const res = data?.data;
   return [res, rest] as [typeof res, typeof rest];
 }

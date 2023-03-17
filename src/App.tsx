@@ -8,6 +8,8 @@ import LoadingOrError from '@/components/LoadingOrError'
 import Layout from './layouts'
 import { getToken } from './http/token'
 import { globalContext, useGlobal } from './contexts/global'
+import { ConfigProvider } from 'antd'
+import zhCN from 'antd/lib/locale/zh_CN';
 
 const withoutCheckLoginPath = ['/login'];
 
@@ -51,7 +53,9 @@ export default function App(): ReactElement {
   }, [location.pathname])
   return (
     <Provider value={{ ...globalState, dispatch }}>
-      <Layout>{element}</Layout>
+      <ConfigProvider locale={zhCN}>
+        <Layout>{element}</Layout>
+      </ConfigProvider>
     </Provider>
   )
 }
