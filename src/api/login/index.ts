@@ -12,9 +12,14 @@ export const login = (params: { userName: string; password: string }) => callApi
   contentType: 'multipart',
 })
 
-
 export const logout = (params: { userName: string; }) => callApi({
   url: '/api/logout',
   method: 'get',
   params,
+})
+
+export const signUp = (params: UserParams.SignIn) => callApi<loginType>({
+  url: '/api/signUp',
+  method: 'post',
+  data: params,
 })

@@ -1,32 +1,33 @@
+import { AllCoursesType } from "@/constants";
 import regs from "@/utils/reg";
-import { ProForm, ProFormText } from "@ant-design/pro-components";
+import { ProForm, ProFormRadio, ProFormSelect, ProFormText } from "@ant-design/pro-components";
 import { Form, Modal } from "antd";
 import React, { useImperativeHandle, useRef, useState } from "react"
 
-export type AddAdminModalValuesType = AdminParams.Create
+export type AddUserModalValuesType = UserData.User
 
 type RefType = {
-  show: (filledValue?: AddAdminModalValuesType) => void
+  show: (filledValue?: AddUserModalValuesType) => void
 }
 
-interface AdminModalProps {
+interface UserModalProps {
   btnText?: string;
   modalTitle?: string;
   isUpdate?: boolean;
   onShow?: () => void;
   onClose?: () => void;
-  onOk?: (values: AddAdminModalValuesType) => Promise<any>;
-  onDelete?: (values: AddAdminModalValuesType) => Promise<any>;
+  onOk?: (values: UserParams.Update) => Promise<any>;
+  onDelete?: (values: AddUserModalValuesType) => Promise<any>;
 }
 
-export function useAdminModal() {
+export function useUserModal() {
   const ref = useRef<RefType>({
     show: () => { }
   });
   return ref
 }
 
-const AdminModal = React.forwardRef<RefType, AdminModalProps>((props, ref) => {
+const UserModal = React.forwardRef<RefType, UserModalProps>((props, ref) => {
   const {
     onShow, onClose, onOk, modalTitle, isUpdate,
   } = props
@@ -34,10 +35,13 @@ const AdminModal = React.forwardRef<RefType, AdminModalProps>((props, ref) => {
   const [visible, toggleVisible] = useState<boolean>(false)
   const [okLoading, setOkLoading] = useState(false)
 
-  const handleFinish = async (formValue: AddAdminModalValuesType) => {
+  const handleFinish = async (formValue: AddUserModalValuesType) => {
+    const { label, ...rest } = formValue
+
     setOkLoading(true)
     onOk?.({
-      ...formValue
+      label: label.join('、'),
+      ...rest
     }).then(() => {
       form.resetFields()
       toggleVisible(false)
@@ -45,7 +49,7 @@ const AdminModal = React.forwardRef<RefType, AdminModalProps>((props, ref) => {
   }
 
 
-  const handleClick = (filledValue?: AddAdminModalValuesType) => {
+  const handleClick = (filledValue?: AddUserModalValuesType) => {
     onShow?.()
     if (filledValue) {
       form.setFieldsValue({
@@ -67,7 +71,7 @@ const AdminModal = React.forwardRef<RefType, AdminModalProps>((props, ref) => {
 
 
   useImperativeHandle(ref, () => ({
-    show: (filledValue?: AddAdminModalValuesType) => {
+    show: (filledValue?: AddUserModalValuesType) => {
       handleClick(filledValue)
     }
   }))
@@ -83,7 +87,7 @@ const AdminModal = React.forwardRef<RefType, AdminModalProps>((props, ref) => {
       }}
       width={600}
     >
-      <ProForm<AddAdminModalValuesType>
+      <ProForm<AddUserModalValuesType>
         form={form}
         onFinish={handleFinish}
         submitter={false}
@@ -93,29 +97,16 @@ const AdminModal = React.forwardRef<RefType, AdminModalProps>((props, ref) => {
         wrapperCol={{ span: 20 }}
       >
         <ProFormText name="id" hidden />
-        {
-          !isUpdate && (
-            <>
-              <ProFormText
-                label="账号"
-                name="username"
-                rules={[
-                  { required: true },
-                ]}
-              />
-              <ProFormText
-                label="密码"
-                name="pwd"
-                rules={[
-                  { required: true },
-                  { min: 6, max: 16 },
-                  { pattern: regs.onlyEnglishAndNumber, message: '仅支持英文字母或数字' }
-                ]}
-                placeholder="由6-16位英文字母、数字、字母+数字组成"
-              />
-            </>
-          )
-        }
+        <ProFormText
+          label="账号"
+          name="userName"
+          disabled
+        />
+        <ProFormText
+          label="密码"
+          name="password"
+          disabled
+        />
         <ProFormText
           label="姓名"
           name="name"
@@ -123,17 +114,42 @@ const AdminModal = React.forwardRef<RefType, AdminModalProps>((props, ref) => {
             { required: true },
           ]}
         />
-        <ProFormText
-          label="联系方式"
-          name="phone"
+        <ProFormRadio.Group
+          label="性别"
+          name="gender"
           rules={[
             { required: true },
-            { pattern: regs.phone, message: '请输入正确的手机号' }
           ]}
+          options={[
+            {
+              label: '男',
+              value: '男',
+            },
+            {
+              label: '女',
+              value: '女',
+            },
+          ]}
+        />
+        <ProFormText
+          label="专业"
+          name="major"
+          rules={[
+            { required: true },
+          ]}
+        />
+        <ProFormSelect
+          label="标签"
+          name="label"
+          mode="multiple"
+          options={AllCoursesType.map(item => ({
+            label: item,
+            value: item,
+          }))}
         />
       </ProForm>
     </Modal>
   )
 })
 
-export default AdminModal
+export default UserModal
