@@ -20,6 +20,15 @@ export function useCourses({ name, type, page = 1 }: PaginationRequest<CoursePar
   return [res, rest] as [typeof res, typeof rest];
 }
 
+// 我的课程
+export function useMyCourses(id: number, page: number = 1) {
+  const { data, ...rest } = useQuery(['getMyCourses', page], () => getMyCourses({ id, page, size: 20 }), {
+    refetchOnWindowFocus: false
+  })
+  const res = data?.data;
+  return [res, rest] as [typeof res, typeof rest];
+}
+
 export function useUserInfo(params: { id: number }) {
   const { data, ...rest } = useQuery(['getUserInfo'], () => getUserInfo(params), {
     refetchOnWindowFocus: false,
@@ -49,14 +58,6 @@ export function useCourseDetail(id?: string, options?: CommonOption<CourseDetail
     onSuccess(data) {
       options?.onSuccess?.(data?.data)
     },
-  })
-  const res = data?.data;
-  return [res, rest] as [typeof res, typeof rest];
-}
-
-export function useMyCourses(searchText?: string, page: number = 1) {
-  const { data, ...rest } = useQuery(['getMyCourses', page], () => getMyCourses({ name: searchText, page: page - 1, size: 20 }), {
-    refetchOnWindowFocus: false
   })
   const res = data?.data;
   return [res, rest] as [typeof res, typeof rest];

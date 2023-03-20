@@ -8,6 +8,13 @@ export const getCourses = (params: PaginationRequest<CourseParams.Find>) =>
     params,
   })
 
+// 首页我的课程
+export const getMyCourses = (params: PaginationRequest & { id: number }) => callApi<PaginationResponse<Course>>({
+  url: '/api/course/self/list',
+  method: 'get',
+  params,
+})
+
 // 查询我选择的课程的详情
 export const getCourseDetail = (params: { id: string }) => callApi<CourseDetail>({
   url: '/api/course/detail',
@@ -15,19 +22,19 @@ export const getCourseDetail = (params: { id: string }) => callApi<CourseDetail>
   params,
 })
 
+// 给自己注册一个课程
+export const registerCourseForMe = (params: { id: number, courseId: string }) => callApi({
+  url: '/api/course/registerCourse',
+  method: 'post',
+  data: params,
+})
+
+
 // export const getCourses = (params: PaginationRequest) => callApi<PaginationResponse<Course>>({
 //   url: '/api/courses/all',
 //   method: 'get',
 //   params,
 // })
-
-
-// 首页我端所有课程-带进度
-export const getMyCourses = ({ page, size }: PaginationRequest<{ name?: string; }>) => callApi.crypted<PaginationResponse<CourseDetail>>({
-  url: '/api/v1/self/account/course/list',
-  data: { page, size, progress: true },
-  method: 'post',
-})
 
 // // 查询我选择的课程的详情
 // export const getMyCourseDetail = (params: { id: string }) => callApi.crypted<CourseDetail>({
@@ -38,14 +45,6 @@ export const getMyCourses = ({ page, size }: PaginationRequest<{ name?: string; 
 //   method: 'post'
 // })
 
-// 给自己注册一个课程
-export const registerCourseForMe = (params: Pick<Course, 'id'>) => callApi.crypted({
-  url: '/api/v1/self/account/update/registerCourse',
-  data: {
-    courseId: params.id
-  },
-  method: 'post',
-})
 
 
 // 当前播放的视频进度为0时，通知后端

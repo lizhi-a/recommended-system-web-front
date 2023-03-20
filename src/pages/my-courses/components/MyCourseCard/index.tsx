@@ -1,24 +1,19 @@
-import { DeleteOutlined } from '@ant-design/icons';
 import { Image, Progress, Typography } from 'antd';
-import dayjs from 'dayjs';
+import courseImg from '@/assets/course.png'
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './index.css'
+import dayjs from 'dayjs';
 
 interface MyCourseCardProps {
-  course?: CourseDetail;
+  course?: Course;
   onDelete?: (course: CourseDetail) => void;
 }
 const MyCourseCard: React.FC<MyCourseCardProps> = (props) => {
-  const { course, onDelete } = props;
-  const handleDelete: React.MouseEventHandler<HTMLSpanElement> = (event) => {
-    if (onDelete && course) {
-      onDelete(course);
-    }
-    event.preventDefault();
-  }
-  const hasCatalogs = (course?.catalogs?.length || 0) > 0;
-  const realProgress = course?.courseProgress || 0;
+  const { course } = props;
+  const hasCatalogs = (course?.catalogs?.length || 0) > 0
+  const realProgress = course?.courseProgress || 0
+
   if (!course) {
     return <></>
   }
@@ -27,11 +22,12 @@ const MyCourseCard: React.FC<MyCourseCardProps> = (props) => {
       <Link to={`/course-detail/${course.id}`} className="block w-full">
         <div className='flex-auto bg-white shadow-md transform transition hover:shadow-xl cursor-pointer rounded-lg overflow-hidden my-course-card'>
           <div className='w-full h-40'>
-            <Image className="object-cover object-center" width="100%" height={160} preview={false} src={course.coverUrl} />
+            <Image className="object-cover object-center" width="100%" height={160} preview={false} src={courseImg} />
           </div>
           <div className='p-4'>
             <Typography.Text className='double-line-ellipsis mb-1 m-0 font-medium te'>{course.name}</Typography.Text>
-            <div className='text-ant-text-secondary m-0 mb-1 p-0'>
+            <Typography.Text type="secondary">课时安排:{course.period_schedule}</Typography.Text>
+            {/* <div className='text-ant-text-secondary m-0 mb-1 p-0'>
               <span className='mr-1'>
                 开始时间
               </span>
@@ -42,16 +38,8 @@ const MyCourseCard: React.FC<MyCourseCardProps> = (props) => {
               <div className='flex-1'>
                 <Progress percent={hasCatalogs ? realProgress : 100} />
               </div>
-            </div>
+            </div> */}
           </div>
-
-          {/* 删除按钮 begin */}
-          {/* <div className='my-course-card__delete-btn absolute top-0 right-0 rounded-full w-32 h-32 bg-black opacity-50'>
-            <span className='absolute bottom-6 left-8 text-lg text-ant-error-color' onClick={handleDelete}>
-              <DeleteOutlined />
-            </span>
-          </div> */}
-          {/* 删除按钮 end */}
         </div>
       </Link>
     </div>
