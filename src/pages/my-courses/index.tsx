@@ -6,8 +6,10 @@ import MyCourseCard from './components/MyCourseCard';
 
 const MyCourses: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [data, { refetch, isLoading, isError }] = useMyCourses();
+  const user = JSON.parse(localStorage.getItem('userInfo') || '')
+  const [data, { isLoading, isError }] = useMyCourses(user?.id)
   const totalElements = data?.totalElements || 0;
+
   return (
     <div>
       <h1 className='pt-8 text-lg'>我的课程</h1>
@@ -18,10 +20,10 @@ const MyCourses: React.FC = () => {
           ) : (
             data?.content?.map((item) => (
               <MyCourseCard
-              key={item.id}
-              course={item}
-            />
-          ))
+                key={item.id}
+                course={item}
+              />
+            ))
           )
         }
       </section>

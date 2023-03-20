@@ -1,9 +1,8 @@
 import { registerCourseForMe } from '@/api/courses';
-import { useCourseDetail } from '@/hooks/queries';
-import { Breadcrumb, Button, Image, Modal, Rate, Tabs, Tag } from 'antd';
-import dayjs from 'dayjs';
+import { useCourseDetail, useMyCourses } from '@/hooks/queries';
+import { Breadcrumb, Button, Image, Modal, notification, Rate, Tabs, Tag } from 'antd';
 import React, { useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import courseImg from '@/assets/course.png'
 import CourseDescriptionMsg from './components/CourseDescriptionMsg';
 import DescriptionItem from '@/components/DescriptionItem';
@@ -14,79 +13,31 @@ const Box: React.FC<{ children?: React.ReactNode; className?: string; }> = ({ ch
   </div>
 )
 
-const FORMAT_STR = 'YYYY-MM-DD HH:mm'
-
 const CourseDetail: React.FC = () => {
-  const { id: courseId } = useParams<{ id: string; }>();
-  const [myCourseDetail, { refetch: refetchMyCourseDetail }] = useCourseDetail(courseId);
-  const navigate = useNavigate();
-
-
+  const { id: courseId } = useParams<{ id: string; }>()
+  const [courseDetail, { refetch: refetchcourseDetail }] = useCourseDetail(courseId)
+  const user = JSON.parse(localStorage.getItem('userInfo') || '')
+  const [myCourseList, { refetch: refetchMyCourseList }] = useMyCourses(user?.id)
   const handleRegisterCourse = async () => {
-    const selfRegisterable = false;
-    const now = dayjs();
-    const startTime = dayjs(myCourseDetail?.startTime);
-    const entTime = dayjs(myCourseDetail?.endTime);
-    if (now.isBefore(startTime) || now.isAfter(entTime)) {
-      Modal.info({
-        title: <div><p>本课程开课时间为：</p><p>{startTime.format(FORMAT_STR)}~{entTime.format(FORMAT_STR)}</p></div>,
-        okText: '我知道了',
-      })
-      return
-    }
-    if (!selfRegisterable) {
-      Modal.info({
-        title: '本课程暂未开放自助选课，请联系老师',
-        okText: '我知道了',
-      })
-      return
-    } else if (!myCourseDetail?.createAt) {
-      Modal.confirm({
-        title: `要开始学习${myCourseDetail?.name || ''}`,
-        async onOk() {
-          if (courseId) {
-            await registerCourseForMe({
-              id: courseId
-            })
-            const catelogId = myCourseDetail?.catalogs?.[0]?.id;
-            if (catelogId) {
-              navigate(`/video/${courseId}/${catelogId}`)
-            } else {
-              refetchMyCourseDetail();
-            }
-          }
-        },
-        okText: '确认',
-        cancelText: '取消'
-      })
-    }
-  }
-
-  const handleContinueCourse = async () => {
-    const now = dayjs();
-    const startTime = dayjs(myCourseDetail?.startTime);
-    const entTime = dayjs(myCourseDetail?.endTime);
-    if (now.isBefore(startTime) || now.isAfter(entTime)) {
-      Modal.info({
-        title: <div><p>本课程开课时间为：</p><p>{startTime.format(FORMAT_STR)}~{entTime.format(FORMAT_STR)}</p></div>,
-        okText: '我知道了',
-      })
-      return
-    }
-    let catelogId = myCourseDetail?.catalogs?.[0]?.id;
-    const targetCatalog = myCourseDetail?.catalogs?.find((item) => !item.progress || item.progress < 100);
-    if (targetCatalog) {
-      catelogId = targetCatalog.id;
-    }
-    if (catelogId) {
-      navigate(`/video/${courseId}/${catelogId}`)
-    } else {
-      refetchMyCourseDetail();
-    }
+    Modal.confirm({
+      title: `确定要开始学习${courseDetail?.name || ''}`,
+      async onOk() {
+        if (courseId && user?.id) {
+          await registerCourseForMe({
+            id: user?.id,
+            courseId: courseId
+          })
+          notification.success({
+            message: '选课成功'
+          })
+          refetchMyCourseList()
+        }
+      },
+    })
   }
 
   useEffect(() => {
-    refetchMyCourseDetail();
+    refetchcourseDetail();
   }, [])
 
   return (
@@ -94,7 +45,7 @@ const CourseDetail: React.FC = () => {
       <div className='px-4 py-2 mt-6 bg-white'>
         <Breadcrumb>
           <Breadcrumb.Item href='/courses'>首页</Breadcrumb.Item>
-          <Breadcrumb.Item>{myCourseDetail?.name}</Breadcrumb.Item>
+          <Breadcrumb.Item>{courseDetail?.name}</Breadcrumb.Item>
         </Breadcrumb>
         <div className='flex flex-wrap lg:px-4 my-4'>
           <Box>
@@ -104,25 +55,25 @@ const CourseDetail: React.FC = () => {
           </Box>
           <Box className="md:">
             <div className='flex justify-between mb-2'>
-              <h2 className='m-0 p-0 w-1/2 overflow-hidden text-ellipsis whitespace-nowrap'>{myCourseDetail?.name}</h2>
-              <div className='text-ant-text-secondary text-base'>开通单位：{myCourseDetail?.org}</div>
+              <h2 className='m-0 p-0 w-1/2 overflow-hidden text-ellipsis whitespace-nowrap'>{courseDetail?.name}</h2>
+              <div className='text-ant-text-secondary text-base'>开通单位：{courseDetail?.org}</div>
             </div>
             <div className='text-ant-text-secondary leading-7 text-base' style={{ minHeight: 128 }}>
               <span className='text-gray-600'>课程介绍：</span>
-              {myCourseDetail?.course_description}
+              {courseDetail?.course_description || '暂无介绍'}
             </div>
             <div className='text-ant-text-secondary leading-7 text-base'>
               <span className='text-gray-600'>课程类别：</span>
-              <Tag color="cyan">{myCourseDetail?.type}</Tag>
+              <Tag color="cyan">{courseDetail?.type || '无分类'}</Tag>
             </div>
             <div className='text-ant-text-secondary leading-7 text-base'>
               <span className='text-gray-600'>课程评分：</span>
-              <Rate disabled allowHalf value={myCourseDetail?.score} /> {myCourseDetail?.score ? `${myCourseDetail?.score}分` : '暂无评分'}
+              <Rate disabled allowHalf value={courseDetail?.score} /> {courseDetail?.score ? `${courseDetail?.score}分` : '暂无评分'}
             </div>
-            <div className='absolute left-0 bottom-0'>
+            <div className='absolute right-0 bottom-0'>
               {
-                myCourseDetail?.startAt ? (
-                  <Button size='large' type='primary' onClick={handleContinueCourse}>继续学习</Button>
+                courseDetail && myCourseList?.content.map(item => item.id).includes(courseDetail?.id) ? (
+                  <Button size='large' type='primary'>已选课</Button>
                 ) : (
                   <Button size='large' type='primary' onClick={handleRegisterCourse}>开始学习</Button>
                 )
@@ -132,13 +83,14 @@ const CourseDetail: React.FC = () => {
         </div>
       </div>
       {
-        myCourseDetail && (
+        courseDetail && (
           <Tabs
+            className='bg-white'
             items={[
               {
                 key: 'detail',
                 label: `详情`,
-                children: <CourseDescriptionMsg courseDetail={myCourseDetail} />,
+                children: <CourseDescriptionMsg courseDetail={courseDetail} />,
               },
               {
                 key: 'chapter',
@@ -146,7 +98,7 @@ const CourseDetail: React.FC = () => {
                 children: (
                   <DescriptionItem title="课程大纲">
                     {
-                      myCourseDetail.course_catalogue?.split('#').map(item => {
+                      courseDetail.course_catalogue?.split('#').map(item => {
                         return <p key={item} className="m-0">{item}</p>
                       })
                     }
