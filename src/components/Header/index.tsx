@@ -45,6 +45,7 @@ const Header: React.FC<HeaderProps> = ({ userInfo }) => {
                 children: [
                   { label: <div>首页</div>, key: '/courses' },
                   { label: <div>我的课程</div>, key: '/my-courses' },
+                  { label: <div>我的评价</div>, key: '/my-comments' }
                 ]
               },
             ]}
