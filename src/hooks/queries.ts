@@ -1,4 +1,4 @@
-import { getCourseDetail, getCourses, getMyCourses } from "@/api/courses";
+import { getCourseDetail, getCourseLastRecord, getCourseQuestions, getCourses, getMyCourses } from "@/api/courses";
 import { me } from "@/api/login";
 import { getUserInfo } from "@/api/system";
 import { useQuery } from "@tanstack/react-query";
@@ -61,4 +61,30 @@ export function useCourseDetail(id?: string, options?: CommonOption<CourseDetail
   })
   const res = data?.data;
   return [res, rest] as [typeof res, typeof rest];
+}
+
+// 获取我已经注册的课程的详情
+export function useCourseQuestions(cid?: string, options?: CommonOption<Question[]>) {
+  const { data, ...rest } = useQuery(['getCourseQuestions', cid, location.pathname], () => getCourseQuestions({ cid } as { cid: string }), {
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+    onSuccess(data) {
+      options?.onSuccess?.(data?.data.content)
+    },
+  })
+  const res = data?.data.content;
+  return [res, rest] as [typeof res, typeof rest];
+}
+
+// 获取上次做题的记录、课程进度
+export function useLastCourseRecord({ cid, uid }: { cid?: string; uid: number; }) {
+  const { data, ...rest } = useQuery(['getMyCourses', cid, uid, location.pathname], () => getCourseLastRecord({ cid, uid }), {
+    refetchOnWindowFocus: false
+  })
+  const res = data?.data;
+  return [res, rest] as [typeof res, typeof rest];
+}
+
+export function useMyCourseDetail() {
+
 }

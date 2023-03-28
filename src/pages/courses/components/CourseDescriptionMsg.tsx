@@ -8,7 +8,7 @@ const CourseDescriptionMsg: React.FC<CourseDetailPropsType> = (props) => {
   const { courseDetail } = props
 
   return (
-    <>
+    <div className="w-11/12 my-6 m-auto">
       <DescriptionItem title="概述" key='overview'>
         {courseDetail.course_overview || '暂无内容'}
       </DescriptionItem>
@@ -47,7 +47,7 @@ const CourseDescriptionMsg: React.FC<CourseDetailPropsType> = (props) => {
           }) || '暂无内容'
         }
       </DescriptionItem>
-    </>
+    </div>
   )
 }
 

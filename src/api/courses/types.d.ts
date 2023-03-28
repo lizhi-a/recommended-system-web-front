@@ -25,10 +25,41 @@ interface Course {
   comments_score: string;
 }
 
+interface MyCourses {
+  id: number;
+  cid_id: string;
+  courseInfo: Course;
+  process: number;
+  score?: number;
+}
+
 declare namespace CourseParams {
   interface Find {
     name: string;
     type: string;
+  }
+
+  interface SubmitTest {
+    uid: number;
+    cid: string;
+    questions: Record<number, string>;
+  }
+
+  interface myCourseRecord {
+    id: number;
+    cid_id: string;
+    uid_id: string;
+    process: number;
+    last_score: number;
+    score: number;
+    last_answer: string;
+  }
+
+  interface VideoRepoter {
+    cid: string;
+    uid: number;
+    progress: number;
+    reportTime: string;
   }
 }
 
@@ -57,19 +88,9 @@ interface CourseDetail {
   comments_list: string;
   comments_time: string;
   comments_score: string;
-  // description: string;
-  // coverUrl: string;
-  // status: string;
-  // orgId: string;
-  // orgName: string;
-  // catalogs?: Catlog[];
-  // createBy: string;
-  // createAt: string | null;
-  // type: 'UNDONE' | 'COMPLETED' | null;
-  // courseProgress?: number;
-  // startTime?: string;
-  // endTime?: string;
+  video: string;
 }
+
 
 interface Catlog {
   id: string;
@@ -86,22 +107,16 @@ interface Catlog {
   updateAt?: string;
 }
 
-interface MyCourses {
-  courseId: string;
-  courseName: string;
-  type: string;
-  courseProgress?: number;
-  createAt: string;
-}
 
-interface VideoRepoter {
-  courseId: string;
-  catalogId: string;
-  progress: number;
-  reportTime: string;
-}
 
 interface VideoRepoterWhenPlay {
   getcourseId: string;
   catalogId: string;
+}
+
+interface Question {
+  question_id: number;
+  question_info: string;
+  question_options: string[];
+  question_answer: string;
 }

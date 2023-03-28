@@ -9,7 +9,7 @@ export const getCourses = (params: PaginationRequest<CourseParams.Find>) =>
   })
 
 // 首页我的课程
-export const getMyCourses = (params: PaginationRequest & { id: number }) => callApi<PaginationResponse<Course>>({
+export const getMyCourses = (params: PaginationRequest & { id: number }) => callApi<PaginationResponse<MyCourses>>({
   url: '/api/course/self/list',
   method: 'get',
   params,
@@ -23,12 +23,39 @@ export const getCourseDetail = (params: { id: string }) => callApi<CourseDetail>
 })
 
 // 给自己注册一个课程
-export const registerCourseForMe = (params: { id: number, courseId: string }) => callApi({
+export const registerCourseForMe = (params: { uid: number, cid: string }) => callApi({
   url: '/api/course/registerCourse',
   method: 'post',
   data: params,
 })
 
+// 获取课程评论
+export const getCourseQuestions = (params: { cid: string }) => callApi<PaginationResponse<Question>>({
+  url: '/api/course/questions',
+  method: 'get',
+  params,
+})
+
+// 提交测试题
+export const submitTest = (params: CourseParams.SubmitTest) => callApi({
+  url: '/api/course/submitTest',
+  method: 'post',
+  data: params
+})
+
+// 获取上次的做题记录
+export const getCourseLastRecord = (params: { cid?: string, uid: number }) => callApi<CourseParams.myCourseRecord>({
+  url: '/api/course/self/lastRecord',
+  method: 'get',
+  params,
+})
+
+// 上报视频播放
+export const reportVideoPlay = (params: CourseParams.VideoRepoter) => callApi({
+  url: '/api/course/self/report',
+  data: params,
+  method: 'post',
+})
 
 // export const getCourses = (params: PaginationRequest) => callApi<PaginationResponse<Course>>({
 //   url: '/api/courses/all',
@@ -48,15 +75,8 @@ export const registerCourseForMe = (params: { id: number, courseId: string }) =>
 
 
 // 当前播放的视频进度为0时，通知后端
-export const reportFirstPlay = (params: Pick<VideoRepoter, 'catalogId' | 'courseId'>) => callApi.crypted({
+export const reportFirstPlay = (params: Pick<CourseParams.VideoRepoter, 'cid'>) => callApi.crypted({
   url: '/api/v1/self/account/course/playVideo',
-  data: params,
-  method: 'post',
-})
-
-// 上报视频播放
-export const reportVideoPlay = (params: VideoRepoter) => callApi.crypted({
-  url: '/api/v1/self/account/course/report',
   data: params,
   method: 'post',
 })

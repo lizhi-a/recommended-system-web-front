@@ -19,9 +19,9 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
   const playerRef = useRef<any>(); // 播放器实例
   const [continuousReporting, setContinuousReporting] = useState(false); // 是否持续上报
   const maxProgressRef = useRef(0); // 播放过的最大进度，用途：用户将视频往左拖后，播放未达到这个进度就不进行上报
-  const { catalogId, courseId } = useParams<{courseId: string; catalogId: string;}>()
-  const [courseDetail, { refetch: refetchCourseDetail}] = useMyCourseDetail(courseId);
-  const [, { refetch: refetchMyCourses}] = useMyCourses();
+  const { catalogId, courseId } = useParams<{ courseId: string; catalogId: string; }>()
+  const [courseDetail, { refetch: refetchCourseDetail }] = useMyCourseDetail(courseId);
+  const [, { refetch: refetchMyCourses }] = useMyCourses();
   const navigate = useNavigate();
 
   // 查找播放的章节
@@ -48,10 +48,10 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
   const mayBeFirstStudy = () => {
     if (!targetCatlog?.createAt) {
       if (catalogId && courseId)
-      reportFirstPlay({
-        catalogId,
-        courseId
-      })
+        reportFirstPlay({
+          catalogId,
+          courseId
+        })
     }
   }
 
@@ -89,7 +89,7 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
       return
     }
     setTimeout(() => {
-    const ckPlayerRecords = player.cookie() as any[];
+      const ckPlayerRecords = player.cookie() as any[];
       maxProgressRef.current = targetCatlog?.progress || 0;
       const seekTimeInCookie = findItemFormList(ckPlayerRecords, 'name', targetCatlog?.id)?.time;
       const seekTimeInServer = (maxProgressRef.current / 100) * player.duration();
@@ -219,7 +219,7 @@ const VideoPage: React.FC<VideoPageProps> = (props) => {
                   courseId={courseId}
                   onClick={handleClickChapter}
                 />
-              )) 
+              ))
             )
           }
         </ul>
