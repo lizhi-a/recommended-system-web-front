@@ -1,5 +1,6 @@
 import { getCourseDetail, getCourseLastRecord, getCourseQuestions, getCourses, getMyCourses } from "@/api/courses";
 import { me } from "@/api/login";
+import { getAllQuestionsType, getQuestionsByType, getUserQuestionsListAndScore } from "@/api/questions";
 import { getUserInfo } from "@/api/system";
 import { useQuery } from "@tanstack/react-query";
 
@@ -86,5 +87,32 @@ export function useLastCourseRecord({ cid, uid }: { cid?: string; uid: number; }
 }
 
 export function useMyCourseDetail() {
+}
 
+// 获取所有问题类型
+export function useAllQuestionsType() {
+  const { data, ...rest } = useQuery(['getAllQuestionsType'], () => getAllQuestionsType(), {
+    refetchOnWindowFocus: false
+  })
+  const res = data?.data.content;
+  return [res, rest] as [typeof res, typeof rest];
+}
+
+// 获取某个类型的题目
+export function useQuestionsByType({ type, uid }: { type?: string; uid?: number; }) {
+  const { data, ...rest } = useQuery(['getQuestionsByType', type, uid], () => getQuestionsByType({ type, uid }), {
+    refetchOnWindowFocus: false
+  })
+  const res = data?.data.content;
+  const score = data?.data.score
+  return [res, score, rest] as [typeof res, typeof score, typeof rest];
+}
+
+// 获取某个类型的题目
+export function useUserQuestionsListAndScore({ uid }: { uid?: number; }) {
+  const { data, ...rest } = useQuery(['getUserQuestionsListAndScore', uid], () => getUserQuestionsListAndScore({ uid }), {
+    refetchOnWindowFocus: false
+  })
+  const res = data?.data.content
+  return [res, rest] as [typeof res, typeof rest];
 }

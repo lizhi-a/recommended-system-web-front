@@ -1,0 +1,20 @@
+.double-line-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.nroad-clicked-ant-table-row {
+  cursor: pointer;
+  transition: background-color .3s;
+}
+
+.nroad-clicked-ant-table-row:hover {
+  background-color: #e2f9f6;
+}
+
+.nroad-clicked-ant-table-row:hover .ant-table-cell-row-hover {
+  background-color: #e2f9f6 !important;
+}

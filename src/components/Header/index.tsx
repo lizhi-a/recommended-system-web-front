@@ -20,8 +20,10 @@ const Header: React.FC<HeaderProps> = ({ userInfo }) => {
             className=' text-white border-0'
             style={{ backgroundColor: '#ffffff00' }}
             items={[
-              { label: <div className='text-white'>首页</div>, key: '/courses' },
+              { label: <div className='text-white'>全部课程</div>, key: '/courses' },
+              { label: <div className='text-white'>课程推荐</div>, key: '/recommend-courses' },
               { label: <div className='text-white'>我的课程</div>, key: '/my-courses' },
+              { label: <div className='text-white'>能力自测</div>, key: '/self-test' },
             ]}
             onClick={({ key }) => {
               navigate(key || '/')
