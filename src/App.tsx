@@ -9,7 +9,8 @@ import Layout from './layouts'
 import { getToken } from './http/token'
 import { globalContext, useGlobal } from './contexts/global'
 import { ConfigProvider } from 'antd'
-import zhCN from 'antd/lib/locale/zh_CN';
+import zhCN from 'antd/lib/locale/zh_CN'
+import './global.css'
 
 const withoutCheckLoginPath = ['/login'];
 

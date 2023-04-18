@@ -139,13 +139,18 @@ const UserModal = React.forwardRef<RefType, UserModalProps>((props, ref) => {
           ]}
         />
         <ProFormSelect
-          label="标签"
+          label="学科领域"
           name="label"
           mode="multiple"
           options={AllCoursesType.map(item => ({
             label: item,
             value: item,
           }))}
+        />
+        <ProFormSelect
+          label="兴趣标签"
+          name="custom_label"
+          mode="tags"
         />
       </ProForm>
     </Modal>

@@ -45,6 +45,12 @@ declare namespace CourseParams {
     questions: Record<number, string>;
   }
 
+  interface SubmitSelfTest {
+    uid: number;
+    qType?: string;
+    questions: Record<number, string>;
+  }
+
   interface myCourseRecord {
     id: number;
     cid_id: string;
@@ -119,4 +125,12 @@ interface Question {
   question_info: string;
   question_options: string[];
   question_answer: string;
+  question_type: string;
+}
+
+interface QuestionsAnalysis {
+  id: number;
+  qType: string;
+  uid: string;
+  score: string;
 }

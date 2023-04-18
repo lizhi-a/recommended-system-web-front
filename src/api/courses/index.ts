@@ -1,12 +1,11 @@
 import callApi from "@/http/call-api";
 
 // 首页所有课程
-export const getCourses = (params: PaginationRequest<CourseParams.Find>) =>
-  callApi<PaginationResponse<Course>>({
-    url: '/api/courses/find',
-    method: 'get',
-    params,
-  })
+export const getCourses = (params: PaginationRequest<CourseParams.Find>) => callApi<PaginationResponse<Course>>({
+  url: '/api/courses/find',
+  method: 'get',
+  params,
+})
 
 // 首页我的课程
 export const getMyCourses = (params: PaginationRequest & { id: number }) => callApi<PaginationResponse<MyCourses>>({
@@ -57,11 +56,13 @@ export const reportVideoPlay = (params: CourseParams.VideoRepoter) => callApi({
   method: 'post',
 })
 
-// export const getCourses = (params: PaginationRequest) => callApi<PaginationResponse<Course>>({
-//   url: '/api/courses/all',
-//   method: 'get',
-//   params,
-// })
+export const getRecommendCourses = (params: {}) => callApi<PaginationResponse<CourseDetail>>({
+  url: '/api/course/recommend',
+  // url: '/api/courses/find',
+  method: 'get',
+  params,
+})
+
 
 // // 查询我选择的课程的详情
 // export const getMyCourseDetail = (params: { id: string }) => callApi.crypted<CourseDetail>({

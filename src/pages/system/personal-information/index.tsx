@@ -29,9 +29,16 @@ const personalInformation: React.FC = () => {
           <Descriptions.Item label="姓名">{userInfo?.name}</Descriptions.Item>
           <Descriptions.Item label="性别">{userInfo?.gender}</Descriptions.Item>
           <Descriptions.Item label="专业">{userInfo?.major}</Descriptions.Item>
-          <Descriptions.Item label="标签">
+          <Descriptions.Item label="学科领域">
             {
               userInfo?.label?.map(item => (
+                <Tag key={item}>{item}</Tag>
+              ))
+            }
+          </Descriptions.Item>
+          <Descriptions.Item label="兴趣标签">
+            {
+              userInfo?.custom_label?.map(item => (
                 <Tag key={item}>{item}</Tag>
               ))
             }

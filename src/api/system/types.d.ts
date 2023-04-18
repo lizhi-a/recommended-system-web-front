@@ -8,6 +8,7 @@ declare namespace UserData {
     gender: string;
     label: string[];
     major: string;
+    custom_label: string[];
   }
 }
 

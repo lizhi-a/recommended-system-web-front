@@ -17,7 +17,7 @@ export const routes: MenuRoute[] = [
   },
   {
     path: '/courses',
-    name: '首页',
+    name: '全部课程',
     component: lazy(() => import('@/pages/courses')),
   },
   {
@@ -25,6 +25,21 @@ export const routes: MenuRoute[] = [
     name: '课程详情',
     component: lazy(() => import('@/pages/courses/[id]')),
     hideInMenu: true,
+  },
+  {
+    path: '/recommend-courses',
+    name: '课程推荐',
+    component: lazy(() => import('@/pages/recommend-courses'))
+  },
+  {
+    path: '/self-test',
+    name: '能力自测',
+    component: lazy(() => import('@/pages/self-test'))
+  },
+  {
+    path: '/self-test/:type',
+    name: '能力自测',
+    component: lazy(() => import('@/pages/self-test/[type]'))
   },
   {
     path: '/my-courses',
