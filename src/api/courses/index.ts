@@ -63,6 +63,11 @@ export const getRecommendCourses = (params: {}) => callApi<PaginationResponse<Co
   params,
 })
 
+export const getInteractiveRecommendCourses = (params: {}) => callApi<PaginationResponse<CourseDetail>>({
+  url: '/api/course/interactive-mode-recommend',
+  method: 'get',
+  params,
+})
 
 // // 查询我选择的课程的详情
 // export const getMyCourseDetail = (params: { id: string }) => callApi.crypted<CourseDetail>({
