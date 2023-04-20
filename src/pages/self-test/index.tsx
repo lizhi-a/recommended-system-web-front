@@ -46,9 +46,9 @@ function getEchartsOption(props: { originData: QuestionsAnalysis[] }) {
 }
 
 const SelfTest: React.FC = () => {
-  const [allQuestionsType] = useAllQuestionsType()
   const navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem('userInfo') || '')
+  const [allQuestionsType] = useAllQuestionsType({ uid: user.id })
   const [questionsAnalysis, { refetch }] = useUserQuestionsListAndScore({ uid: user.id })
   const [option, setOption] = useState({});
 

@@ -1,9 +1,10 @@
 import callApi from "@/http/call-api";
 
 // 获取所有题目类型
-export const getAllQuestionsType = () => callApi<{ content: string[]; }>({
+export const getAllQuestionsType = (params: { uid: number }) => callApi<{ content: string[]; }>({
   url: '/api/questions/type/all',
   method: 'get',
+  params,
 })
 
 // 获取某个类型的题目

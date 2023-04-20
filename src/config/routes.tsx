@@ -32,6 +32,11 @@ export const routes: MenuRoute[] = [
     component: lazy(() => import('@/pages/recommend-courses'))
   },
   {
+    path: '/interactive-mode-recommend-courses',
+    name: '基于交互模式的课程推荐',
+    component: lazy(() => import('@/pages/interactive-recommend-courses'))
+  },
+  {
     path: '/self-test',
     name: '能力自测',
     component: lazy(() => import('@/pages/self-test'))

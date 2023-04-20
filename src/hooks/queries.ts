@@ -90,8 +90,8 @@ export function useMyCourseDetail() {
 }
 
 // 获取所有问题类型
-export function useAllQuestionsType() {
-  const { data, ...rest } = useQuery(['getAllQuestionsType'], () => getAllQuestionsType(), {
+export function useAllQuestionsType({ uid }: { uid: number }) {
+  const { data, ...rest } = useQuery(['getAllQuestionsType', uid], () => getAllQuestionsType({ uid }), {
     refetchOnWindowFocus: false
   })
   const res = data?.data.content;
