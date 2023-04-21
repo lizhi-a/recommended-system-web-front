@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({ userInfo }) => {
   return (
     <>
       <header className='w-full h-16 items-center bg-emerald-500 px-6 hidden md:flex' >
-        <h2 className='text-white m-0 cursor-pointer' onClick={() => navigate('/')}>教育资源推荐系统</h2>
+        <h2 className='text-white m-0 cursor-pointer' onClick={() => navigate('/')}>个性化学习推荐系统</h2>
         <div className='w-16 sm:w-16 md:w-16 lg:w-auto flex-1'>
           <Menu
             className=' text-white border-0'
@@ -22,7 +22,7 @@ const Header: React.FC<HeaderProps> = ({ userInfo }) => {
             items={[
               { label: <div className='text-white'>全部课程</div>, key: '/courses' },
               { label: <div className='text-white'>课程推荐</div>, key: '/recommend-courses' },
-              { label: <div className='text-white'>基于交互模式的推荐</div>, key: '/interactive-mode-recommend-courses' },
+              { label: <div className='text-white'>个性化课程推荐</div>, key: '/interactive-mode-recommend-courses' },
               { label: <div className='text-white'>我的课程</div>, key: '/my-courses' },
               { label: <div className='text-white'>能力自测</div>, key: '/self-test' },
             ]}
