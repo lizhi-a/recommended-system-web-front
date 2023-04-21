@@ -81,11 +81,6 @@ const InteractiveRecommendCourses: React.FC = () => {
       hideInSearch: true,
     },
     {
-      title: '推荐分数',
-      dataIndex: 'rating',
-      hideInSearch: true,
-    },
-    {
       title: '参与人数',
       dataIndex: 'students',
       hideInSearch: true,
@@ -93,6 +88,11 @@ const InteractiveRecommendCourses: React.FC = () => {
     {
       title: '开课周期',
       dataIndex: 'period_schedule'
+    },
+    {
+      title: '推荐分数',
+      dataIndex: 'rating',
+      hideInSearch: true,
     },
   ]
 
