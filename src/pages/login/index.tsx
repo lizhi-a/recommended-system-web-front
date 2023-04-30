@@ -65,7 +65,7 @@ export default () => {
 					labelCol={{ span: 6 }}
 					className='flex flex-col justify-center'
 				>
-					<Form.Item name='userName' label='用户名' required>
+					<Form.Item name='userName' label='用户名' rules={[{ required: true }]}>
 						<Input />
 					</Form.Item>
 					<Form.Item name='password' label='密码'
@@ -76,21 +76,21 @@ export default () => {
 						]}>
 						<Input />
 					</Form.Item>
-					<Form.Item name='name' label='姓名' required>
+					<Form.Item name='name' label='姓名' rules={[{ required: true }]}>
 						<Input />
 					</Form.Item>
-					<Form.Item name='gender' label='性别' required>
+					<Form.Item name='gender' label='性别' rules={[{ required: true }]}>
 						<Radio.Group options={[
 							{ label: '男', value: '男' },
 							{ label: '女', value: '女' },
 						]} />
 					</Form.Item>
-					<Form.Item name='major' label='专业' required>
+					<Form.Item name='major' label='专业' rules={[{ required: true }]}>
 						<Input />
 					</Form.Item>
-					<Form.Item name='label' label='兴趣标签'>
+					<Form.Item name='label' label='兴趣领域'>
 						<Select
-							placeholder="请选择您感兴趣的标签"
+							placeholder="请选择您感兴趣的领域"
 							mode="multiple"
 							options={AllCoursesType.map(item => ({
 								label: item,
@@ -108,9 +108,9 @@ export default () => {
 	return (
 		<div className='min-h-screen flex justify-center items-center'>
 			{/* 顶部导航栏 */}
-			<div className='fixed top-0 flex w-full h-16 bg-blue-900 justify-center items-center' >
+			<div className='fixed top-0 flex w-full h-16 bg-blue-500 justify-center items-center' >
 				<div className='w-full md:w-3/5 flex items-center'>
-					<span className='text-white text-lg font-medium'>教育资源推荐系统</span>
+					<span className='text-white text-lg font-medium'>个性化学习资源推荐系统</span>
 				</div>
 			</div>
 			{/* 中间的图片及表单 */}

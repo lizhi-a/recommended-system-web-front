@@ -138,13 +138,13 @@ const Comments: React.FC = () => {
               );
             },
           },
-          actions: {
-            render: (text, record) => [
-              record.uid === user?.id && <a target="_blank" rel="noopener noreferrer" key="link">
-                删除
-              </a>,
-            ],
-          },
+          // actions: {
+          //   render: (text, record) => [
+          //     record.uid === user?.id && <a target="_blank" rel="noopener noreferrer" key="link">
+          //       删除
+          //     </a>,
+          //   ],
+          // },
         }}
       />
     </div>
