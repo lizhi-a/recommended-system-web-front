@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ userInfo }) => {
             style={{ backgroundColor: '#ffffff00' }}
             items={[
               { label: <div className='text-white'>全部课程</div>, key: '/courses' },
-              { label: <div className='text-white'>课程推荐</div>, key: '/recommend-courses' },
+              // { label: <div className='text-white'>课程推荐</div>, key: '/recommend-courses' },
               { label: <div className='text-white'>个性化课程推荐</div>, key: '/interactive-mode-recommend-courses' },
               { label: <div className='text-white'>我的课程</div>, key: '/my-courses' },
               { label: <div className='text-white'>能力自测</div>, key: '/self-test' },

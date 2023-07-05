@@ -13,9 +13,6 @@ function getEchartsOption(props: { originData: QuestionsAnalysis[] }) {
   }))
 
   const option = {
-    title: {
-      text: '能力雷达图'
-    },
     tooltip: {
       trigger: 'axis'
     },
@@ -32,7 +29,9 @@ function getEchartsOption(props: { originData: QuestionsAnalysis[] }) {
         tooltip: {
           trigger: 'item'
         },
-        areaStyle: {},
+        areaStyle: {
+          color: '#C6E5FF'
+        },
         data: [
           {
             value: seriesData,
@@ -62,10 +61,23 @@ const SelfTest: React.FC = () => {
     refetch()
     refetchAllQuestionsType()
   }, [])
-
   return (
     <>
-      <ReactECharts option={option} />
+      <div>
+        <h3>能力雷达图</h3>
+        <div className="flex justify-center">
+          <div className="w-3/6">
+            <ReactECharts option={option} />
+          </div>
+          <div className="w-1/6 mt-4 text-gray-400">
+            {
+              questionsAnalysis?.map(item => (
+                <p key={item.qType}>{item.qType}: {item.score}分</p>
+              ))
+            }
+          </div>
+        </div>
+      </div>
       <List
         bordered
         header={<h2>测试题目集</h2>}
@@ -80,7 +92,8 @@ const SelfTest: React.FC = () => {
               <a onClick={() => { navigate(`/self-test/${item}`) }}>查看详情 &gt;</a>
             </div>
           </List.Item>
-        )}
+        )
+        }
         className="bg-white"
       />
     </>

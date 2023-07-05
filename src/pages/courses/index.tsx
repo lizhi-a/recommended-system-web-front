@@ -13,7 +13,8 @@ const Dashboard: React.FC<DashboardProps> = (props) => {
   const [searchText, setSearchText] = useState<string>()
   const [currentPage, setCurrentPage] = useState(1)
   const [type, setType] = useState<string>()
-  const [data, { refetch, isLoading, isError }] = useCourses({ name: searchText, type, page: currentPage })
+  const user = JSON.parse(localStorage.getItem('userInfo') || '')
+  const [data, { refetch, isLoading, isError }] = useCourses({ cName: searchText, type, uid: user.id, page: currentPage })
   const totalElements = data?.totalElements || 0
 
   const handleSearchChange: SearchProps['onChange'] = (e) => {

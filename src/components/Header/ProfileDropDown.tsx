@@ -9,7 +9,7 @@ interface ProfileDropDownProps {
 }
 const ProfileDropDown: React.FC<ProfileDropDownProps> = (props) => {
   // const { userInfo } = props;
-  const userInfo = JSON.parse(localStorage.getItem('userInfo') || '')
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') || "")
   const navigate = useNavigate()
 
   return (

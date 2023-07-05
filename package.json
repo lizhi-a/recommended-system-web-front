@@ -10,6 +10,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "@ant-design/pro-components": "^2.3.54",
+    "@antv/g6": "^4.8.10",
     "@tanstack/react-query": "^4.24.4",
     "@vitejs/plugin-legacy": "^4.0.1",
     "antd": "^4.24.8",
