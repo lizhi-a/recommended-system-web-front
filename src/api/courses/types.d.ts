@@ -39,6 +39,14 @@ declare namespace CourseParams {
     type: string;
   }
 
+  interface GetRecommendCoursesParams {
+    cName?: string;
+    type?: string;
+    uid?: number;
+    page?: number;
+    size?: number;
+  }
+
   interface SubmitTest {
     uid: number;
     cid: string;
@@ -95,6 +103,9 @@ interface CourseDetail {
   comments_time: string;
   comments_score: string;
   video: string;
+  start_at: string;
+  end_at: string;
+  teacher_list: string;
 }
 
 
@@ -133,4 +144,16 @@ interface QuestionsAnalysis {
   qType: string;
   uid: string;
   score: string;
+}
+
+interface CoursePath {
+  cid: string;
+  label: string;
+  description: string;
+  score: number;
+}
+
+
+interface CourseDependence {
+
 }

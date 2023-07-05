@@ -1,4 +1,4 @@
-import { getCourseDetail, getCourseLastRecord, getCourseQuestions, getCourses, getMyCourses } from "@/api/courses";
+import { getCourseDependence, getCourseDetail, getCourseLastRecord, getCourseQuestions, getCourses, getMyCourses, getPathCourse, getRecommendCourses } from "@/api/courses";
 import { me } from "@/api/login";
 import { getAllQuestionsType, getQuestionsByType, getUserQuestionsListAndScore } from "@/api/questions";
 import { getUserInfo } from "@/api/system";
@@ -11,9 +11,9 @@ export interface CommonOption<D = unknown> {
 }
 
 // 首页所有课程
-export function useCourses({ name, type, page = 1 }: PaginationRequest<CourseParams.Find>) {
+export function useCourses({ uid, cName, type, page = 1 }: PaginationRequest<CourseParams.GetRecommendCoursesParams>) {
   const { data, ...rest } = useQuery(['getCourses', page],
-    () => getCourses({ name, type, page, size: 20 }),
+    () => getRecommendCourses({ uid, cName, type, page, size: 20 }),
     {
       refetchOnWindowFocus: false
     })
@@ -114,5 +114,23 @@ export function useUserQuestionsListAndScore({ uid }: { uid?: number; }) {
     refetchOnWindowFocus: false
   })
   const res = data?.data.content
+  return [res, rest] as [typeof res, typeof rest];
+}
+
+// 获取推荐路径上的所有课程
+export function usePathCourse({ uid }: { uid: number }) {
+  const { data, ...rest } = useQuery(['getPathCourse', uid], () => getPathCourse({ uid }), {
+    refetchOnWindowFocus: false
+  })
+  const res = data?.data.content;
+  return [res, rest] as [typeof res, typeof rest];
+}
+
+// 获取推荐路径上的课程之间的依赖关系
+export function useCourseDependence() {
+  const { data, ...rest } = useQuery(['getCourseDependence'], () => getCourseDependence(), {
+    refetchOnWindowFocus: false
+  })
+  const res = data?.data.content;
   return [res, rest] as [typeof res, typeof rest];
 }

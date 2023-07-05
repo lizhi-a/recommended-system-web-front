@@ -19,7 +19,7 @@ export default defineConfig({
           style: (name) => `antd/es/${name}/style`,
         },
       ],
-    })
+    }),
   ],
   css: {
     // 预处理器配置项
@@ -60,20 +60,16 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:8000',
-        // target: 'http://192.168.15.105:10000',
-        // target: 'http://192.168.48.68:10000',
-        // target: 'http://192.168.48.87:10000',
         changeOrigin: true,
         headers: {
           Connection: 'keep-alive'
         },
         // pathRewrite: { '^/api': '' },
       },
-      '/minio/': {
-        target: 'http://192.168.15.105:9000',
-        changeOrigin: true,
-        rewrite: (p) => p.replace(/^\/minio/, ''),
-      }
     }
   },
+  define: {
+    'process.env': {
+    }
+  }
 })

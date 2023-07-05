@@ -56,9 +56,8 @@ export const reportVideoPlay = (params: CourseParams.VideoRepoter) => callApi({
   method: 'post',
 })
 
-export const getRecommendCourses = (params: {}) => callApi<PaginationResponse<CourseDetail>>({
+export const getRecommendCourses = (params: CourseParams.GetRecommendCoursesParams) => callApi<PaginationResponse<CourseDetail>>({
   url: '/api/course/recommend',
-  // url: '/api/courses/find',
   method: 'get',
   params,
 })
@@ -67,6 +66,19 @@ export const getInteractiveRecommendCourses = (params: {}) => callApi<Pagination
   url: '/api/course/interactive-mode-recommend',
   method: 'get',
   params,
+})
+
+// 获取推荐路径上的所有课程
+export const getPathCourse = (params: { uid: number }) => callApi<PaginationResponse<CoursePath>>({
+  url: '/api/pathcourse/find',
+  method: 'get',
+  params,
+})
+
+// 获取推荐路径上的课程之间的依赖关系
+export const getCourseDependence = () => callApi<PaginationResponse<CourseDependence>>({
+  url: '/api/pathCourse/dependence',
+  method: 'get',
 })
 
 // // 查询我选择的课程的详情

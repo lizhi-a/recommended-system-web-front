@@ -1,9 +1,12 @@
 import { getInteractiveRecommendCourses, getRecommendCourses } from "@/api/courses";
 import NProTable from "@/components/n-pro-table"
 import { CoursesType } from "@/constants";
+import { useCourseDependence, usePathCourse } from "@/hooks/queries";
 import { ActionType, ProColumns, ProFormInstance, ProTableProps } from "@ant-design/pro-components";
+import { Badge } from "antd";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import PathDiagram from "../self-test/PathDiagram";
 
 const InteractiveRecommendCourses: React.FC = () => {
   const actions = useRef<ActionType>()
@@ -11,6 +14,8 @@ const InteractiveRecommendCourses: React.FC = () => {
   const navigate = useNavigate()
   const user = JSON.parse(localStorage.getItem('userInfo') || '')
   const [labelArr, setLabelArr] = useState<string[]>()
+  const [pathCourse] = usePathCourse({ uid: user.id })
+  const [courseDependence] = useCourseDependence()
 
   useEffect(() => {
     let arr: string[] = []
@@ -98,6 +103,19 @@ const InteractiveRecommendCourses: React.FC = () => {
 
   return (
     <>
+      <div>
+        <h3>学习路径推荐</h3>
+        <div className="flex justify-between">
+          <PathDiagram pathCourse={pathCourse} courseDependence={courseDependence} />
+          <div className="flex-1">
+            <p><Badge count=' ' color='#ffc2c2' />课程测试题分数在 0~59</p>
+            <p><Badge count=' ' color='#ffdab6' />课程测试题分数在 60~74</p>
+            <p><Badge count=' ' color='#fff3c4' />课程测试题分数在 75~89</p>
+            <p><Badge count=' ' color='#c7fccd' />课程测试题分数在 90~100</p>
+            <p><Badge count=' ' color='#c4e3ff' />未测试</p>
+          </div>
+        </div>
+      </div>
       <NProTable<CourseDetail>
         actionRef={actions}
         request={fetchFn}
